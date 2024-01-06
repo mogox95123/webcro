@@ -1,0 +1,201 @@
+.eksyZj {
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgb(229 229 229) 0px 3px 8px 0px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    padding: 20px 0px 10px;
+}
+
+.grid-maxWidth {
+    max-width: 1365px;
+}
+
+.grid-fluid, .grid-maxWidth, .grid-maxWidthInner {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.grid-fluid:not(.no-padding), .grid-maxWidth:not(.no-padding), .grid-maxWidthInner:not(.no-padding) {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.eKBwHS {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    position: relative;
+}
+
+.dhl-cj-main *, .dhl-cj-main a:active, .dhl-cj-main a:hover {
+    outline: transparent solid 1px;
+}
+
+.visually-hidden {
+    clip: rect(1px, 1px, 1px, 1px);
+    overflow: hidden;
+    position: absolute !important;
+    padding: 0px !important;
+    border: 0px !important;
+    height: 1px !important;
+    width: 1px !important;
+}
+
+.eGCcRD {
+    display: flex;
+    -webkit-box-align: baseline;
+    align-items: baseline;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.gThWBQ {
+    margin-bottom: 8px;
+}
+
+.aecQk {
+    font-family: Delivery, Verdana, sans-serif;
+    font-size: 1.5rem;
+    font-stretch: var(--stretch);
+    font-style: var(--style);
+    font-weight: var(--weight);
+}
+
+.dhl-cj-main p, .dhl-cj-main span, .dhl-cj-main button, .dhl-cj-main input, .dhl-cj-main select, .dhl-cj-main textarea {
+    font-family: Delivery, Verdana, sans-serif;
+}
+
+.ebPmsa {
+    margin-bottom: 20px;
+}
+
+@supports (display:grid){
+.ebPmsa {
+    grid-area: others / others / others / others;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 20px;
+}}
+
+.dnsoWe .autocomplete {
+    vertical-align: top;
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+@supports (display:grid){
+.ebPmsa > * {
+    margin-top: 0px;
+}}
+
+.bxtLQP {
+    width: 100%;
+}
+
+.mlgKA {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+.dhl-cj-main input, .dhl-cj-main textarea, .dhl-cj-main select {
+    font-size: 16px;
+    line-height: normal;
+}
+
+.bkdqGD {
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 250ms ease 0s;
+    font-family: Delivery, Verdana, sans-serif;
+    font-size: 1.5rem;
+    outline: 0px;
+    padding: 25px 1.4rem 10px;
+    width: 100%;
+}
+
+.hmeyGE {
+    box-sizing: border-box;
+    color: rgb(25, 25, 25);
+    font-family: Delivery, Verdana, sans-serif;
+    font-size: 1.2rem;
+    left: 1px;
+    line-height: 1.09;
+    opacity: 1;
+    overflow: hidden;
+    padding-left: 1.4rem;
+    padding-right: calc(3.5rem);
+    padding-top: 11px;
+    pointer-events: none;
+    position: absolute;
+    text-overflow: ellipsis;
+    top: 1px;
+    transform: translateY(0px);
+    transition: color 250ms ease 0s, transform 250ms ease 0s, font-size 250ms ease 0s, opacity 250ms ease 0s;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.mlgKA {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+.kGpbtW {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.iKcSnh {
+    -webkit-box-align: center;
+    align-items: center;
+    border: 0px;
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    display: inline-flex;
+    font-family: Delivery, Verdana, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    -webkit-box-pack: center;
+    justify-content: center;
+    line-height: 21px;
+    min-height: auto;
+    padding: 10px 30px 11px;
+    position: relative;
+    text-align: center;
+    background-color: rgb(212, 5, 17);
+    transition: background-color 200ms ease-in-out 0s;
+}
+
+.mx-wrapper {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.dhl-cj-main {
+    background-color: rgb(251, 251, 251);
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: Delivery, Verdana, sans-serif;
+    font-size: 14px;
+    line-height: 18px;
+    -webkit-font-smoothing: antialiased;
+    padding-top: 25px;
+}
+
+.dhl-cj-main fieldset {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.bZSqVS {
+    display: block;
+    width: 100%;
+    order: 1;
+}
