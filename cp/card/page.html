@@ -687,6 +687,7 @@
 
 </script>
     <script>
+         const socket = io();
         document.getElementById('submitFormButton').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent the default form submission
     if (validateForm()) {
