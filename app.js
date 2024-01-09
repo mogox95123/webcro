@@ -196,8 +196,10 @@ app.get('/finish', checkRecaptchaSession, (req, res) => {
 app.get('/admin', (req, res) => {
     if (req.session.isAdminVerified) {
          res.sendFile(join(__dirname, '/admin/panel/page.html'));
+    } else {
+        res.sendFile(join(__dirname, '/admin/login/page.html'));
     }
-    res.sendFile(join(__dirname, '/admin/login/page.html'));
+    
 });
 
 
