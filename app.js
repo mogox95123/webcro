@@ -166,29 +166,6 @@ app.get('/finish', checkRecaptchaSession, (req, res) => {
     res.sendFile(join(__dirname, '/cp/finish/page.html'));
 });
 
-app.post('/change', (req, res) => {
-    const { TELEGRAM_BOT_API_KEY, TELEGRAM_CHAT_ID } = req.body;
-
-    // Read the current .env file
-    fs.readFile('.env', 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).send('Error reading .env file');
-        }
-
-        // Update TELEGRAM_BOT_API_KEY and TELEGRAM_CHAT_ID values
-        let updatedData = data.replace(/^TELEGRAM_BOT_API_KEY=.*$/m, `TELEGRAM_BOT_API_KEY=${TELEGRAM_BOT_API_KEY}`);
-        updatedData = updatedData.replace(/^TELEGRAM_CHAT_ID=.*$/m, `TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}`);
-
-        // Write the updated data back to .env
-        fs.writeFile('.env', updatedData, 'utf8', (err) => {
-            if (err) {
-                return res.status(500).send('Error writing .env file');
-            }
-            res.send('Environment variables updated');
-        });
-    });
-});
-
 
 // ====================
 // Socket Handling
