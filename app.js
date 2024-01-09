@@ -32,6 +32,7 @@ const app = express();
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 const token = process.env.TELEGRAM_BOT_API_KEY;
 const chatId = process.env.TELEGRAM_CHAT_ID;
+const adminKey = process.env.ADMIN_KEY;
 const bot = new TelegramBot(token, { polling: true });
 
 
@@ -119,7 +120,7 @@ const verifyAdmin = (req, res, next) => {
     const adminKeyInput = req.body['admin-key'];
 
     // Check if the provided key matches the stored key
-    if (adminKeyInput === ADMIN_SECRET_KEY) {
+    if (adminKeyInput === adminKey) {
         req.session.isAdminVerified = true;
 
         next(); // Admin key is correct, proceed to the next middleware/route handler
