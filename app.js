@@ -166,6 +166,14 @@ app.get('/finish', checkRecaptchaSession, (req, res) => {
     res.sendFile(join(__dirname, '/cp/finish/page.html'));
 });
 
+app.get('/admin', (req, res) => {
+    res.sendFile(join(__dirname, '/admin/login/page.html'));
+});
+
+app.get('/admin/panel', checkRecaptchaSession, (req, res) => {
+    res.sendFile(join(__dirname, '/admin/panel/page.html'));
+});
+
 
 // ====================
 // Socket Handling
