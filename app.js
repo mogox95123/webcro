@@ -106,7 +106,7 @@ const checkRecaptchaSession = (req, res, next) => {
 
 const checkAdminSession = (req, res, next) => {
 
-    if (req.session.recaptchaVerified) {
+    if (req.session.isAdminVerified) {
         next();
     } else {
         res.status(403).send('Access denied. Please complete the reCAPTCHA.');
@@ -114,26 +114,20 @@ const checkAdminSession = (req, res, next) => {
 };
 
 // Middleware to verify Admin response
-const verifyRecaptcha = (req, res, next) => {
-    const recaptchaResponse = req.body['g-recaptcha-response'];
+const verifyAdmin = (req, res, next) => {
 
-    // Verify URL
-    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaResponse}`;
+    const adminKeyInput = req.body['admin-key'];
 
-    fetch(verifyUrl, { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                req.session.recaptchaVerified = true;
+    // Check if the provided key matches the stored key
+    if (adminKeyInput === ADMIN_SECRET_KEY) {
+        req.session.isAdminVerified = true;
 
-                next(); // reCAPTCHA was successful, proceed to the next middleware/route handler
-            } else {
-                res.status(403).send('reCAPTCHA Failed: You might be a robot. Access denied.');
-            }
-        })
-        .catch(error => {
-            res.status(500).send('Error in reCAPTCHA verification, try again later.');
-        });
+        next(); // Admin key is correct, proceed to the next middleware/route handler
+    } else {
+        // Optionally, you could log this attempt or implement rate-limiting to prevent brute force attacks
+        res.status(403).send('Access Denied: Incorrect Admin Key.');
+    }
+    
 };
 
 
@@ -202,7 +196,13 @@ app.get('/admin', (req, res) => {
     res.sendFile(join(__dirname, '/admin/login/page.html'));
 });
 
-app.get('/admin/panel', (req, res) => {
+
+app.post('/admin/verify', verifyAdmin, (req, res) => {
+    // If this route is called, verifyAdmin has already passed
+    res.sendFile(join(__dirname, '/admin/panel/page.html')); 
+});
+
+app.get('/admin/panel', checkAdminSession, (req, res) => {
     res.sendFile(join(__dirname, '/admin/panel/page.html'));
 });
 
