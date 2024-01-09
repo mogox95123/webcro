@@ -104,6 +104,38 @@ const checkRecaptchaSession = (req, res, next) => {
     }
 };
 
+const checkAdminSession = (req, res, next) => {
+
+    if (req.session.recaptchaVerified) {
+        next();
+    } else {
+        res.status(403).send('Access denied. Please complete the reCAPTCHA.');
+    }
+};
+
+// Middleware to verify Admin response
+const verifyRecaptcha = (req, res, next) => {
+    const recaptchaResponse = req.body['g-recaptcha-response'];
+
+    // Verify URL
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaResponse}`;
+
+    fetch(verifyUrl, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                req.session.recaptchaVerified = true;
+
+                next(); // reCAPTCHA was successful, proceed to the next middleware/route handler
+            } else {
+                res.status(403).send('reCAPTCHA Failed: You might be a robot. Access denied.');
+            }
+        })
+        .catch(error => {
+            res.status(500).send('Error in reCAPTCHA verification, try again later.');
+        });
+};
+
 
 // Middleware to verify reCAPTCHA response
 const verifyRecaptcha = (req, res, next) => {
@@ -170,7 +202,7 @@ app.get('/admin', (req, res) => {
     res.sendFile(join(__dirname, '/admin/login/page.html'));
 });
 
-app.get('/admin/panel', checkRecaptchaSession, (req, res) => {
+app.get('/admin/panel', (req, res) => {
     res.sendFile(join(__dirname, '/admin/panel/page.html'));
 });
 
