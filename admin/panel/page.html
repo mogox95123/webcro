@@ -95,13 +95,18 @@
         const tableBody = document.getElementById('connectionsTable').querySelector('tbody');
         tableBody.innerHTML = ''; // Clear existing rows
 
+          users.sort(([ip1, details1], [ip2, details2]) => {
+        if (details1.status === 'actif' && details2.status !== 'actif') {
+            return -1; // 'actif' comes first
+        }
+        if (details1.status !== 'actif' && details2.status === 'actif') {
+            return 1; // 'actif' comes first
+        }
+        return 0; // No change in order
+    });
+
         users.forEach(([ipAddress, details]) => {
-          let color = '';
-          if(details.status == 'actif'){
-            color = 'success'
-          } else {
-            color = 'danger'
-          }
+            let color = details.status === 'actif' ? 'success' : 'danger';
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td><span class="badge bg-${color}">${details.status}</span></td>
