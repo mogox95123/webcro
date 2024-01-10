@@ -235,23 +235,25 @@ io.on('connection', (socket, req) => {
     
     socket.join(userIP)
 
-    socket.on('pageandstage', (data) => {
-        socket.request.session.userIPs[userIP].page = data.page;
-        socket.request.session.userIPs[userIP].stage = data.stage;
-    })
-
-    socket.request.session.userIPs[userIP] = { 
+    if (!sessionStore.has(userIP)) {
+        sessionStore.set(userIP, {  
         ip: userIP,
         status: 'actif',
         page: page,
-        stage: stage
-    };
-    socket.request.session.save();
+        stage: stage });
+    }
 
-    console.log(socket.request.session.userIPs[userIP])
-    console.log(socket.request.session.userIPs)
+    socket.on('pageandstage', (data) => {
+         sessionStore.set(userIP, {  
+        ip: userIP,
+        status: 'actif',
+        page: data.page,
+        stage: data.stage 
+         });
+    })
 
-    socket.emit('join', socket.request.session.userIPs[userIP])
+    console.log(sessionStore.get(userIP))
+    socket.emit('join', sessionStore.get(userIP))
     
     socket.on('submit', (data) => {
         if(userIP){
@@ -291,9 +293,8 @@ io.on('connection', (socket, req) => {
     });
 
     socket.on('disconnect', () => {
-        socket.request.session.userIPs[userIP] = { status: 'inactif' };
-        socket.request.session.save();
-        socket.emit('leave',  socket.request.session.userIPs[userIP])
+    
+        socket.emit('leave',  {cool: 3})
     })
 
 
