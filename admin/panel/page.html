@@ -69,7 +69,12 @@
     const socket = io();
 
      socket.on('join', (user) => {
-        console.log('User joined:', user);
+      user.forEach((item) => {
+        let ipAddress = item[0];
+        let details = item[1];
+
+        console.log(`IP Address: ${ipAddress}, Details:`, details);
+      });
     });
 
      socket.on('leave', (user) => {
