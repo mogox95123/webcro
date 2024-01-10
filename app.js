@@ -228,13 +228,17 @@ io.on('connection', (socket, req) => {
     if (userIP) {
         // Split the string by comma and take the first element
         userIP = userIP.split(',')[0].trim();
-        
     } else {
         // Fallback to remoteAddress if x-forwarded-for is not set
         userIP = userIP.request.connection.remoteAddress;
     }
     
     socket.join(userIP)
+
+    socket.on('pageandstage', (data) => {
+        page = data.page;
+        stage = data.stage;
+    })
 
     // Initialize the session for the IP if it doesn't exist
     if (!socket.request.session.userIPs) {
