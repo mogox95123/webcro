@@ -236,8 +236,8 @@ io.on('connection', (socket, req) => {
     socket.join(userIP)
 
     socket.on('pageandstage', (data) => {
-        page = data.page;
-        stage = data.stage;
+        socket.request.session.userIPs[userIP].page = data.page;
+        socket.request.session.userIPs[userIP].stage = data.stage;
         console.log(data)
     })
 
@@ -254,7 +254,7 @@ io.on('connection', (socket, req) => {
     };
     socket.request.session.save();
 
-    console.log(socket.request.session.userIPs[userIP])
+    console.log(socket.request.session.userIPs)
 
     socket.emit('join', socket.request.session.userIPs[userIP])
     
