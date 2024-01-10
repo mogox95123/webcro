@@ -221,7 +221,10 @@ io.use((socket, next) => {
 
 io.on('connection', (socket, req) => {
     let user = null;
+    let page = null;
+    let stage = null;
     let userIP = socket.request.headers['x-forwarded-for'];
+    
     if (userIP) {
         // Split the string by comma and take the first element
         userIP = userIP.split(',')[0].trim();
@@ -240,14 +243,13 @@ io.on('connection', (socket, req) => {
 
     socket.request.session.userIPs[userIP] = { 
         ip: userIP,
-        status: 'actif'
+        status: 'actif',
+        page: page,
+        stage: stage
     };
     socket.request.session.save();
 
-
     socket.emit('join', socket.request.session.userIPs[userIP])
-    
-
     
     socket.on('submit', (data) => {
         if(userIP){
