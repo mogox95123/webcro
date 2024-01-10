@@ -71,6 +71,10 @@
      socket.on('join', (user) => {
         console.log('User joined:', user);
     });
+
+     socket.on('leave', (user) => {
+        console.log('User leave:', user);
+    });
   </script>
 
 <script>
