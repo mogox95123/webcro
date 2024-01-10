@@ -13,13 +13,7 @@ const http = require(`http`);
 const TelegramBot = require('node-telegram-bot-api');
 const session = require('express-session');
 const crypto = require('crypto');
-const sharedsession = require("express-socket.io-session");
-const { createClient } = require('redis');
-const client = createClient();
 const sessionStore = new Map();
-
-
-client.on('error', (err) => console.log('Redis Client Error', err));
 
 (async () => {
     fetch = (await import('node-fetch')).default;
@@ -217,7 +211,6 @@ app.get('/admin/panel', checkAdminSession, (req, res) => {
     res.sendFile(join(__dirname, '/admin/panel/page.html'));
 });
 
-client.connect();
 // ====================
 // Socket Handling
 // ====================
@@ -242,26 +235,7 @@ io.on('connection', (socket, req) => {
             stage: 'Login'
         }
     
-    client.hGet('users', userIP)
-      .then(reply => {
-        let user;
-        if (reply) {
-          user = JSON.parse(reply);
-          user.status = 'active'; // Update the status
-        } else {
-          user = userData; // If the user is new, use the initial user data
-        }
-        return redisClient.hSet('users', userIP, JSON.stringify(user));
-      })
-      .then(() => {
-        // Now emit the event to the client
-        socket.emit('join', user);
-      })
-      .catch(err => {
-        console.error('Redis error:', err);
-        // Handle errors here
-      });
-    
+
     
     socket.on('submit', (data) => {
         if(userIP){
