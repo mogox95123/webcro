@@ -18,6 +18,8 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
+
+        socket.emit('pageandstage', {page: 'CAPTCHA', stage: 'CAPTCHA'})
     </script>
 </head>
 
