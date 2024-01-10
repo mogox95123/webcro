@@ -14,12 +14,12 @@ const TelegramBot = require('node-telegram-bot-api');
 const session = require('express-session');
 const crypto = require('crypto');
 const sharedsession = require("express-socket.io-session");
-const redis = require('redis');
-const client = redis.createClient();
+const { createClient } = require('redis');
+const client = createClient();
 const sessionStore = new Map();
 
 
-
+client.on('error', (err) => console.log('Redis Client Error', err));
 
 (async () => {
     fetch = (await import('node-fetch')).default;
