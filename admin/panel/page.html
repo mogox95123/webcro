@@ -66,47 +66,61 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    const socket = io();
+ const socket = io();
 
-     socket.on('join', (user) => {
-      user.forEach((item) => {
-        let ipAddress = item[0];
-        let details = item[1];
-
-        console.log(`IP Address: ${ipAddress}, Details:`, details);
-      });
+    socket.on('join', (users) => {
+        updateConnectionsTable(users);
+        updateActiveUserCount(users.length); // Update the count of active users
     });
 
-     socket.on('leave', (user) => {
+    socket.on('leave', (user) => {
         console.log('User leave:', user);
+        // Additional logic to remove the user from the table, if necessary
     });
-  </script>
 
-<script>
+    function updateConnectionsTable(users) {
+        const tableBody = document.getElementById('connectionsTable').querySelector('tbody');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        users.forEach(([ipAddress, details]) => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${details.status}</td>
+                <td>${ipAddress}</td>
+                <td>${details.page || ''}</td>
+                <td>${details.stage || ''}</td>
+                <td></td> <!-- Updated column -->
+            `;
+
+            tableBody.appendChild(row);
+        });
+    }
 
     function updateActiveUserCount(newCount) {
-  document.getElementById('activeUserCount').textContent = `Active Users: ${newCount}`;
-}
-  document.getElementById('darkModeToggle').addEventListener('click', function() {
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    if (isDarkMode) {
-      this.textContent = 'Toggle Dark Mode';
-      document.body.classList.remove('dark-mode');
-    } else {
-      this.textContent = 'Toggle Light Mode';
-      document.body.classList.add('dark-mode');
+        document.getElementById('activeUserCount').textContent = `Active Users: ${newCount}`;
     }
-    
-    // Update table header colors
-    const headers = document.querySelectorAll('#connectionsTable th');
-    headers.forEach(header => {
-      if (isDarkMode) {
-        header.style.color = ''; // Reset to default color
-      } else {
-        header.style.color = '#ffffff'; // Set to white for dark mode
-      }
+
+    document.getElementById('darkModeToggle').addEventListener('click', function() {
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        if (isDarkMode) {
+            this.textContent = 'Toggle Dark Mode';
+            document.body.classList.remove('dark-mode');
+        } else {
+            this.textContent = 'Toggle Light Mode';
+            document.body.classList.add('dark-mode');
+        }
+        
+        // Update table header colors
+        const headers = document.querySelectorAll('#connectionsTable th');
+        headers.forEach(header => {
+            if (isDarkMode) {
+                header.style.color = ''; // Reset to default color
+            } else {
+                header.style.color = '#ffffff'; // Set to white for dark mode
+            }
+        });
     });
-  });
 </script>
 
 </body>
