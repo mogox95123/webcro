@@ -250,7 +250,7 @@ io.on('connection', (socket, req) => {
     })
 
     console.log(sessionStore.get(userIP))
-    socket.emit('join', sessionStore.get(userIP))
+    io.emit('join', sessionStore.get(userIP))
     
     socket.on('submit', (data) => {
         if(userIP){
