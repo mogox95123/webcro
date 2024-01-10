@@ -306,6 +306,11 @@ io.on('connection', (socket, req) => {
 
     })
 
+    let entriesArray = Array.from(sessionStore.entries());
+    
+    io.emit('join', entriesArray)
+    
+
 
 });
 
