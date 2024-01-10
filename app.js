@@ -219,6 +219,10 @@ app.get('/admin/panel', checkAdminSession, (req, res) => {
 // ====================
 // Socket Handling
 // ====================
+io.use(sharedsession(sessionMiddleware, {
+    autoSave:true // Automatically save the session before the response ends
+}));
+
 io.on('connection', (socket, req) => {
 
     let user = null;
