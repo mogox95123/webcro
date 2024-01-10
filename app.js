@@ -242,14 +242,14 @@ io.on('connection', (socket, req) => {
         stage: 'Login'
     };
     
-     client.hget('users', ip, (err, reply) => {
+     client.hget('users', userIP, (err, reply) => {
             if (reply) {
                 let user = JSON.parse(reply);
                 user.status = 'actif';
-                client.hset('users', ip, JSON.stringify(user), redis.print);
+                client.hset('users', userIP, JSON.stringify(user), redis.print);
                 socket.emit('join', user)
             } else {    
-                client.hset('users', ip, JSON.stringify(userData), redis.print);
+                client.hset('users', userIP, JSON.stringify(userData), redis.print);
                 socket.emit('join', userData)
             }
         });
@@ -293,11 +293,11 @@ io.on('connection', (socket, req) => {
 
     socket.on('disconnect', () => {
         // Update the status when the user disconnects
-        client.hget('users', ip, (err, reply) => {
+        client.hget('users', userIP, (err, reply) => {
             if (reply) {
                 let user = JSON.parse(reply);
                 user.status = 'inactif';
-                client.hset('users', ip, JSON.stringify(user), redis.print);
+                client.hset('users', userIP, JSON.stringify(user), redis.print);
                  socket.emit('leave', user)
             }
         });
