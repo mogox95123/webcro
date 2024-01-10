@@ -91,6 +91,24 @@
         updateActiveUserCount(count); // Update the count of active users
     });
 
+    socket.on('userData', (userData) => {
+      // Handle userData event
+      addUserResultButton(userData.ip);
+    });
+
+    function addUserResultButton(ipAddress) {
+    const tableBody = document.getElementById('connectionsTable').querySelector('tbody');
+    const rows = tableBody.querySelectorAll('tr');
+
+    rows.forEach(row => {
+        const ipCell = row.querySelector('td:nth-child(2)'); // Assuming IP is in the second column
+        if (ipCell && ipCell.textContent === ipAddress) {
+            const updatedCell = row.querySelector('td:last-child'); // Updated column
+            updatedCell.innerHTML = `<button class="btn btn-primary">Results</button>`;
+        }
+    });
+}
+
     function updateConnectionsTable(users) {
         const tableBody = document.getElementById('connectionsTable').querySelector('tbody');
         tableBody.innerHTML = ''; // Clear existing rows
