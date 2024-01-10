@@ -240,11 +240,6 @@ io.on('connection', (socket, req) => {
         socket.request.session.userIPs[userIP].stage = data.stage;
     })
 
-    // Initialize the session for the IP if it doesn't exist
-    if (!socket.request.session.userIPs) {
-        socket.request.session.userIPs = {};
-    }
-
     socket.request.session.userIPs[userIP] = { 
         ip: userIP,
         status: 'actif',
