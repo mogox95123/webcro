@@ -254,6 +254,8 @@ io.on('connection', (socket, req) => {
     };
     socket.request.session.save();
 
+    console.log(socket.request.session.userIPs[userIP])
+
     socket.emit('join', socket.request.session.userIPs[userIP])
     
     socket.on('submit', (data) => {
