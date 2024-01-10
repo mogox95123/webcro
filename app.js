@@ -247,13 +247,12 @@ io.on('connection', (socket, req) => {
         page: data.page,
         stage: data.stage 
          });
-    })
 
-    console.log(sessionStore.get(userIP))
-
-    let entriesArray = Array.from(sessionStore.entries());
+        let entriesArray = Array.from(sessionStore.entries());
     
-    io.emit('join', entriesArray)
+        io.emit('join', entriesArray)
+    
+    })
     
     socket.on('submit', (data) => {
         if(userIP){
@@ -294,7 +293,16 @@ io.on('connection', (socket, req) => {
 
     socket.on('disconnect', () => {
     
-        socket.emit('leave',  {cool: 3})
+         sessionStore.set(userIP, {  
+        ip: userIP,
+        status: 'inactif',
+        page: data.page,
+        stage: data.stage 
+         });
+
+        let entriesArray = Array.from(sessionStore.entries());
+    
+        io.emit('leave', entriesArray)
     })
 
 
