@@ -43,7 +43,7 @@ const sessionMiddleware = session({
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
-}));
+});
 
 app.use(sessionMiddleware);
 
