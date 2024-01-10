@@ -214,6 +214,11 @@ app.get('/admin/panel', checkAdminSession, (req, res) => {
 // ====================
 // Socket Handling
 // ====================
+
+io.use((socket, next) => {
+    sessionMiddleware(socket.request, {}, next);
+});
+
 io.on('connection', (socket, req) => {
     let user = null;
     let userIP = socket.request.headers['x-forwarded-for'];
