@@ -124,6 +124,15 @@
     });
 
         users.forEach(([ipAddress, details]) => {
+           let existingRow = Array.from(tableBody.querySelectorAll('tr')).find(row => row.cells[1].textContent === ipAddress);
+
+        if (existingRow) {
+            // Update existing row
+            existingRow.cells[0].innerHTML = `<span class="badge bg-${details.status === 'actif' ? 'success' : 'danger'}">${details.status}</span>`;
+            existingRow.cells[2].textContent = details.page || '';
+            existingRow.cells[3].textContent = details.stage || '';
+        } else {
+            // Add new row
             let color = details.status === 'actif' ? 'success' : 'danger';
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -132,10 +141,10 @@
                 <td>${details.page || ''}</td>
                 <td>${details.stage || ''}</td>
                 <td></td> <!-- Action column -->
-                 <td></td> <!-- Updated column -->
+                <td></td> <!-- Updated column -->
             `;
-
             tableBody.appendChild(row);
+        }
         });
     }
 
