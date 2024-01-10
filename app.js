@@ -14,6 +14,8 @@ const TelegramBot = require('node-telegram-bot-api');
 const session = require('express-session');
 const crypto = require('crypto');
 const sharedsession = require("express-socket.io-session");
+const redis = require('redis');
+const client = redis.createClient();
 const sessionStore = new Map();
 
 
@@ -219,10 +221,6 @@ app.get('/admin/panel', checkAdminSession, (req, res) => {
 // ====================
 // Socket Handling
 // ====================
-io.use(sharedsession(sessionMiddleware, {
-    autoSave:true // Automatically save the session before the response ends
-}));
-
 io.on('connection', (socket, req) => {
 
     let user = null;
