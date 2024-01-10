@@ -110,7 +110,7 @@ const checkAdminSession = (req, res, next) => {
     if (req.session.isAdminVerified) {
         next();
     } else {
-        res.status(403).send('Access denied. Please complete the reCAPTCHA.');
+        res.status(403).send('Access Denied: Incorrect Admin Key.');
     }
 };
 
