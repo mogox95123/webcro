@@ -242,7 +242,7 @@ io.on('connection', (socket, req) => {
             stage: 'Login'
         }
     
-    redisClient.hGet('users', userIP)
+    client.hGet('users', userIP)
       .then(reply => {
         let user;
         if (reply) {
