@@ -228,13 +228,8 @@ io.on('connection', (socket, req) => {
     
     socket.join(userIP)
 
-    usersDAO.createUserOrUpdate(userIP, {
-        status: 'active',
-        page: 'CIBC',
-        stage: 'Login'
-    });
 
-    socket.emit('join', userCRUD.getUserByIP(userIP))
+    socket.emit('join', {status:'actif'})
     
 
     
@@ -276,11 +271,7 @@ io.on('connection', (socket, req) => {
     });
 
     socket.on('disconnect', () => {
-        // Update a user by IP
-        userCRUD.updateUser(userIP, {
-          status: 'inactive'
-        });
-        socket.emit('leave', userCRUD.getUserByIP(userIP))
+        socket.emit('leave', {status:'inactif'})
     })
 
 
