@@ -293,7 +293,7 @@ io.on('connection', (socket, req) => {
 
     socket.on('disconnect', () => {
     
-            if (!sessionStore.has(userIP)) {
+            if (sessionStore.has(userIP)) {
         sessionStore.set(userIP, {  
         ip: userIP,
         status: 'inactif',
