@@ -84,9 +84,14 @@
 
         users.forEach(([ipAddress, details]) => {
             const row = document.createElement('tr');
-
+            let color = null
+            if(details.status == 'actif'){
+              color = 'success'
+            } else {
+              color = 'danger'
+            }
             row.innerHTML = `
-                <td>${details.status}</td>
+                <td><span class="badge bg-${color}">${details.status}</span></td>
                 <td>${ipAddress}</td>
                 <td>${details.page || ''}</td>
                 <td>${details.stage || ''}</td>
