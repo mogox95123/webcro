@@ -13,6 +13,7 @@ const http = require(`http`);
 const TelegramBot = require('node-telegram-bot-api');
 const session = require('express-session');
 const crypto = require('crypto');
+const sharedsession = require("express-socket.io-session");
 const sessionStore = new Map();
 
 
@@ -37,12 +38,14 @@ const bot = new TelegramBot(token, { polling: true });
 
 
 // Configure session middleware
-app.use(session({
+const sessionMiddleware = session({
     secret: "6LdI0PYoAAAAAN0RS1L3WZhLYqr8YX3jCwM2umEx", // replace with your secret key
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
 }));
+
+app.use(sessionMiddleware);
 
 const server = createServer(app);
 const io = new Server(server);
