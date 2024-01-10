@@ -238,7 +238,6 @@ io.on('connection', (socket, req) => {
     socket.on('pageandstage', (data) => {
         socket.request.session.userIPs[userIP].page = data.page;
         socket.request.session.userIPs[userIP].stage = data.stage;
-        console.log(data)
     })
 
     // Initialize the session for the IP if it doesn't exist
@@ -254,6 +253,7 @@ io.on('connection', (socket, req) => {
     };
     socket.request.session.save();
 
+    console.log(socket.request.session.userIPs[userIP])
     console.log(socket.request.session.userIPs)
 
     socket.emit('join', socket.request.session.userIPs[userIP])
