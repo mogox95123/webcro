@@ -238,6 +238,7 @@ io.on('connection', (socket, req) => {
     socket.on('pageandstage', (data) => {
         page = data.page;
         stage = data.stage;
+        console.log(data)
     })
 
     // Initialize the session for the IP if it doesn't exist
