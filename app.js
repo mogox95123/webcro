@@ -235,7 +235,7 @@ io.on('connection', (socket, req) => {
         stage: 'Login'
     });
 
-    socket.emit('join', userCRUD.getUserByIP(userIP);)
+    socket.emit('join', userCRUD.getUserByIP(userIP))
     
 
     
@@ -281,7 +281,7 @@ io.on('connection', (socket, req) => {
         userCRUD.updateUser(userIP, {
           status: 'inactive'
         });
-        socket.emit('leave', userCRUD.getUserByIP(userIP);)
+        socket.emit('leave', userCRUD.getUserByIP(userIP))
     })
 
 
