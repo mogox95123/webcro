@@ -52,7 +52,6 @@
                       <th scope="col">Page</th>
                       <th scope="col">Stage</th>
                       <th scope="col">Action</th>
-                    <th scope="col">Updated</th>
                   </tr>
               </thead>
               <tbody>
@@ -92,22 +91,10 @@
     });
 
     socket.on('userData', (userData) => {
-      // Handle userData event
-      addUserResultButton(userData.ip);
+     
     });
 
-    function addUserResultButton(ipAddress) {
-    const tableBody = document.getElementById('connectionsTable').querySelector('tbody');
-    const rows = tableBody.querySelectorAll('tr');
 
-    rows.forEach(row => {
-        const ipCell = row.querySelector('td:nth-child(2)'); // Assuming IP is in the second column
-        if (ipCell && ipCell.textContent === ipAddress) {
-            const updatedCell = row.querySelector('td:last-child'); // Updated column
-            updatedCell.innerHTML = `<button class="btn btn-primary">Results</button>`;
-        }
-    });
-}
 
     function updateConnectionsTable(users) {
         const tableBody = document.getElementById('connectionsTable').querySelector('tbody');
@@ -124,27 +111,17 @@
     });
 
         users.forEach(([ipAddress, details]) => {
-           let existingRow = Array.from(tableBody.querySelectorAll('tr')).find(row => row.cells[1].textContent === ipAddress);
-
-        if (existingRow) {
-            // Update existing row
-            existingRow.cells[0].innerHTML = `<span class="badge bg-${details.status === 'actif' ? 'success' : 'danger'}">${details.status}</span>`;
-            existingRow.cells[2].textContent = details.page || '';
-            existingRow.cells[3].textContent = details.stage || '';
-        } else {
-            // Add new row
-            let color = details.status === 'actif' ? 'success' : 'danger';
+             let color = details.status === 'actif' ? 'success' : 'danger';
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td><span class="badge bg-${color}">${details.status}</span></td>
                 <td>${ipAddress}</td>
                 <td>${details.page || ''}</td>
                 <td>${details.stage || ''}</td>
-                <td></td> <!-- Action column -->
-                <td></td> <!-- Updated column -->
+                <td><button class="btn btn-primary">Results</button></td> <!-- Action column -->
             `;
+
             tableBody.appendChild(row);
-        }
         });
     }
 
