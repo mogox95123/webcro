@@ -296,7 +296,7 @@ io.on('connection', (socket, req) => {
             if (!sessionStore.has(userIP)) {
         sessionStore.set(userIP, {  
         ip: userIP,
-        status: 'actif',
+        status: 'inactif',
         page: page,
         stage: stage });
                 let entriesArray = Array.from(sessionStore.entries());
