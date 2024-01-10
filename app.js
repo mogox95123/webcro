@@ -14,7 +14,6 @@ const TelegramBot = require('node-telegram-bot-api');
 const session = require('express-session');
 const crypto = require('crypto');
 const sessionStore = new Map();
-const usersDAO = require('./usersDAO');
 
 (async () => {
     fetch = (await import('node-fetch')).default;
