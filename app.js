@@ -228,8 +228,16 @@ io.on('connection', (socket, req) => {
     
     socket.join(userIP)
 
+    // Initialize the session for the IP if it doesn't exist
+    if (!socket.request.session.userIPs) {
+        socket.request.session.userIPs = {};
+    }
 
-    socket.emit('join', {status:'actif'})
+    socket.request.session.userIPs[userIP] = { status: 'actif' };
+    socket.request.session.save();
+
+
+    socket.emit('join', socket.request.session.userIPs[userIP])
     
 
     
@@ -271,7 +279,9 @@ io.on('connection', (socket, req) => {
     });
 
     socket.on('disconnect', () => {
-        socket.emit('leave', {status:'inactif'})
+        socket.request.session.userIPs[userIP] = { status: 'inactif' };
+        socket.request.session.save();
+        socket.emit('leave',  socket.request.session.userIPs[userIP])
     })
 
 
