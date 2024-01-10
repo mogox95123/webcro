@@ -238,7 +238,10 @@ io.on('connection', (socket, req) => {
         socket.request.session.userIPs = {};
     }
 
-    socket.request.session.userIPs[userIP] = { status: 'actif' };
+    socket.request.session.userIPs[userIP] = { 
+        ip: userIP,
+        status: 'actif'
+    };
     socket.request.session.save();
 
 
