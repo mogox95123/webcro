@@ -293,16 +293,17 @@ io.on('connection', (socket, req) => {
 
     socket.on('disconnect', () => {
     
-         sessionStore.set(userIP, {  
+            if (!sessionStore.has(userIP)) {
+        sessionStore.set(userIP, {  
         ip: userIP,
-        status: 'inactif',
-        page: data.page,
-        stage: data.stage 
-         });
-
-        let entriesArray = Array.from(sessionStore.entries());
+        status: 'actif',
+        page: page,
+        stage: stage });
+                let entriesArray = Array.from(sessionStore.entries());
     
         io.emit('leave', entriesArray)
+    }
+
     })
 
 
