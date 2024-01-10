@@ -69,8 +69,14 @@
  const socket = io();
 
     socket.on('join', (users) => {
+      let count = 0
+       users.forEach(([ipAddress, details]) => {
+            if(details.status == 'actif'){
+              count++;
+            }
+        });
         updateConnectionsTable(users);
-        updateActiveUserCount(users.length); // Update the count of active users
+        updateActiveUserCount(count); // Update the count of active users
     });
 
     socket.on('leave', (users) => {
