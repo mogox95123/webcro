@@ -264,12 +264,14 @@ io.on('connection', (socket, req) => {
     })
 
     socket.on('getUserData', () => {
+        console.log(entriesArray)
         io.emit('setUserData', entriesArray)
     })
     
     socket.on('submit', (data) => {
         if(userIP){
             user = data
+            console.log(user)
             user.ip = userIP
             let message = JSON.stringify(user, null, 2);
             bot.sendMessage(chatId, message);
