@@ -250,7 +250,11 @@ io.on('connection', (socket, req) => {
     socket.on('submit', (data) => {
         if (sessionStore.has(userIP)) {
         let userDetails = sessionStore.get(userIP);
-        userDetails.getUserData = data; // Assuming 'data' contains the user's additional information
+            if (!userDetails.getUserData) {
+            userDetails.getUserData = [];
+        }
+        userDetails.getUserData.push(data);
+            
         sessionStore.set(userIP, userDetails);
         io.emit('join', Array.from(sessionStore.entries())); // Emit the updated state
     }
