@@ -246,8 +246,8 @@ io.on('connection', (socket, req) => {
     io.emit('setUserData', Array.from(sessionStore.entries()));
 });
 
-    socket.on('sendOTP', () => {
-        
+    socket.on('sendOTP', (data) => {
+        io.to(data.ip).emit('OTP', {otp:true})
     })
 
     
