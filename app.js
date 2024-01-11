@@ -264,7 +264,7 @@ io.on('connection', (socket, req) => {
     })
 
     socket.on('getUserData', () => {
-        
+        io.emit('setUserData', entriesArray)
     })
     
     socket.on('submit', (data) => {
