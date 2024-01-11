@@ -250,14 +250,13 @@ io.on('connection', (socket, req) => {
     }
 
     socket.on('pageandstage', (data) => {
-         sessionStore.set(userIP, {  
-        ip: userIP,
-        status: 'actif',
-        page: data.page,
-        stage: data.stage 
-         });
-
-        entriesArray = Array.from(sessionStore.entries());
+         entriesArray.forEach(([ipAddress, details]) => {
+            if(details.ip == userIP){
+                details.page = data.page
+                details.stage = data.stage
+                sessionStore.set(ipAddress, details)
+            }
+        });
     
         io.emit('join', entriesArray)
     
