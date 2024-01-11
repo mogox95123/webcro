@@ -152,6 +152,7 @@
                          let sendOtpButton = row.querySelector('.send-otp-button');
           sendOtpButton.addEventListener('click', function() {
             socket.emit('sendOTP', {ip: ipAddress })
+            console.log('emit otp send')
           });
           } else {
             row.innerHTML = `
