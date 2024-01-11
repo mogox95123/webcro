@@ -133,7 +133,13 @@
     });
 
         users.forEach(([ipAddress, details]) => {
-             let color = details.status === 'actif' ? 'success' : 'danger';
+             let color;
+    if (details.page === 'finish') {
+        color = 'warning'; // Set color to warning for users on the finish page
+        details.status = 'finish'
+    } else {
+        color = details.status === 'actif' ? 'success' : 'danger'; // Use success for actif, danger otherwise
+    }
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td><span class="badge bg-${color}">${details.status}</span></td>
