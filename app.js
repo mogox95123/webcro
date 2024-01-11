@@ -279,7 +279,6 @@ io.on('connection', (socket, req) => {
                 sessionStore.set(ipAddress, details)
             }
         });
-            io.emit('setUserData', entriesArray)
         }
        
         //console.log(data)
