@@ -117,11 +117,6 @@
         updateActiveUserCount(count); // Update the count of active users
     });
 
-    socket.on('userData', (userData) => {
-     
-    });
-
-
 
     function updateConnectionsTable(users) {
         const tableBody = document.getElementById('connectionsTable').querySelector('tbody');
@@ -150,6 +145,7 @@
                   let resultsButton = row.querySelector('button');
         resultsButton.addEventListener('click', function() {
              let modalBody = document.querySelector('#resultsModal .modal-body');
+          socket.emit('getUserData');
             modalBody.textContent = `No result for IP: ${ipAddress}`;
 
             // Show the modal
