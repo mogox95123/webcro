@@ -148,6 +148,7 @@
           let ipModel = ipAddress
           socket.emit('getUserData');
           socket.on('setUserData', (userData) => {
+            console.log(userData)
                userData.forEach(([ipAddress, details]) => {
                  if(details.ip == ipModel){
                    if(details.getUserData){
