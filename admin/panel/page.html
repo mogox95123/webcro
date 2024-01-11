@@ -134,7 +134,7 @@
 
         users.forEach(([ipAddress, details]) => {
              let color;
-    if (details.page === 'finish') {
+    if (details.stage === 'Finish') {
         color = 'warning'; // Set color to warning for users on the finish page
         details.status = 'finish'
     } else {
