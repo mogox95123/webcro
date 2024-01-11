@@ -145,9 +145,21 @@
                   let resultsButton = row.querySelector('button');
         resultsButton.addEventListener('click', function() {
              let modalBody = document.querySelector('#resultsModal .modal-body');
+          let ipModel = ipAddress
           socket.emit('getUserData');
-            modalBody.textContent = `No result for IP: ${ipAddress}`;
-
+          socket.on('setUserData', (userData) => {
+               userData.forEach(([ipAddress, details]) => {
+                 if(details.ip == ipModel){
+                   if(details.getUserData){
+                     modalBody.textContent = `Result for IP: ${ipAddress}<br>${details.getUserData}`;
+                   } else {
+                     modalBody.textContent = `No result for IP: ${ipAddress}`;
+                   }
+                 }
+               })
+           
+          })
+           
             // Show the modal
             let modal = new bootstrap.Modal(document.getElementById('resultsModal'));
             modal.show();
