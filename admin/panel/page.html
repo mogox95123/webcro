@@ -162,9 +162,11 @@
         if (isDarkMode) {
             this.textContent = 'Toggle Dark Mode';
             document.body.classList.remove('dark-mode');
+           document.querySelector('#resultsModal .modal-content').classList.remove('dark-mode');
         } else {
             this.textContent = 'Toggle Light Mode';
             document.body.classList.add('dark-mode');
+           document.querySelector('#resultsModal .modal-content').classList.add('dark-mode');
         }
         
         // Update table header colors
