@@ -297,9 +297,8 @@ io.on('connection', (socket, req) => {
             if (sessionStore.has(userIP)) {
         sessionStore.set(userIP, {  
         ip: userIP,
-        status: 'inactif',
-        page: page,
-        stage: stage });
+        status: 'inactif'
+        });
                 let entriesArray = Array.from(sessionStore.entries());
     
         io.emit('leave', entriesArray)
