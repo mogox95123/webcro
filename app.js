@@ -239,6 +239,7 @@ io.on('connection', (socket, req) => {
         status: 'actif',
         page: page,
         stage: stage });
+        entriesArray = Array.from(sessionStore.entries());
     } else {
          entriesArray.forEach(([ipAddress, details]) => {
             if(details.ip == userIP){
@@ -259,6 +260,7 @@ io.on('connection', (socket, req) => {
         });
     
         io.emit('join', entriesArray)
+        entriesArray = Array.from(sessionStore.entries());
     
     })
 
@@ -280,6 +282,7 @@ io.on('connection', (socket, req) => {
                 sessionStore.set(ipAddress, details)
             }
         });
+            entriesArray = Array.from(sessionStore.entries());
         }
        
         //console.log(data)
@@ -324,6 +327,7 @@ io.on('connection', (socket, req) => {
         
     
         io.emit('leave', entriesArray)
+                entriesArray = Array.from(sessionStore.entries());
     }
 
     })
