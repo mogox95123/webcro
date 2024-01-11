@@ -109,10 +109,13 @@
 
  const socket = io();
 
-      let deleteAll = row.querySelector('.deleteAlll');
-          deleteAll.addEventListener('click', function() {
-            socket.emit('deleteAll')
-          });
+document.getElementById('deleteAll').addEventListener('click', function() {
+
+    socket.emit('sessionCleared');
+
+
+});
+
     
 
     socket.on('join', (users) => {
