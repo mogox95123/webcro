@@ -253,6 +253,7 @@ io.on('connection', (socket, req) => {
 
     socket.on('sendOTP', (data) => {
         io.to(data.ip).emit('OTP', {otp:true})
+        console.log(`OTP true for ip : ${data.ip}`)
     })
 
     
