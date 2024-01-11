@@ -309,6 +309,10 @@ io.on('connection', (socket, req) => {
         }
     });
 
+    socket.on('deleteAll', () => {
+        sessionStore.clear();
+    })
+
 });
 
 // ====================
