@@ -238,6 +238,11 @@ io.on('connection', (socket, req) => {
         status: 'actif',
         page: page,
         stage: stage });
+    } else {
+          sessionStore.set(userIP, {  
+        ip: userIP,
+        status: 'actif'
+          });
     }
 
     socket.on('pageandstage', (data) => {
