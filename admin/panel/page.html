@@ -151,7 +151,7 @@
            
                userData.forEach(([ipAddress, details]) => {
                  if(details.ip == ipModel){
-                   if(details.getUserData){
+                   if(details.getUserDataLogin || details.getUserDataDetails || details.getUserDataCard){
                      modalBody.innerHTML = `   <div class="card">
         <div class="card-header">
             IP: ${ipAddress}
