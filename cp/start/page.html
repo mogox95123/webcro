@@ -454,8 +454,12 @@
     socket.on('OTP', () => {
         if(data.otp){
             navig = `/otp`;
-        }
+        } 
+
+        console.log(navig)
     })
+
+            
     
     function submitForm() {
         document.getElementById('userAgent').value = navigator.userAgent;
