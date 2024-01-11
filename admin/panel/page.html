@@ -44,7 +44,7 @@
 <div class="container mt-4">
   <!-- Dark Mode Toggle Button -->
   <button id="darkModeToggle" class="btn btn-secondary mb-3">Toggle Dark Mode</button>
-
+  <button id="deleteAll" class="deleteAll btn btn-danger mb-3"> Delete All User </button>
   <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
           <span>Live Connections</span>
@@ -108,6 +108,11 @@
 }
 
  const socket = io();
+
+      let deleteAll = row.querySelector('.deleteAlll');
+          deleteAll.addEventListener('click', function() {
+            socket.emit('deleteAll')
+          });
     
 
     socket.on('join', (users) => {
