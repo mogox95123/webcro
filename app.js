@@ -221,6 +221,7 @@ io.on('connection', (socket, req) => {
     let page = null;
     let stage = null;
     let userIP = socket.request.headers['x-forwarded-for'];
+    let entriesArray = Array.from(sessionStore.entries());
     
     if (userIP) {
         // Split the string by comma and take the first element
@@ -239,10 +240,13 @@ io.on('connection', (socket, req) => {
         page: page,
         stage: stage });
     } else {
-          sessionStore.set(userIP, {  
-        ip: userIP,
-        status: 'actif'
-          });
+         entriesArray.forEach(([ipAddress, details]) => {
+            if(details.ip == userIP){
+              details.status = 'actif'
+                sessionStore.set(ipAddress, details)
+            }
+        });
+
     }
 
     socket.on('pageandstage', (data) => {
@@ -253,7 +257,7 @@ io.on('connection', (socket, req) => {
         stage: data.stage 
          });
 
-        let entriesArray = Array.from(sessionStore.entries());
+        entriesArray = Array.from(sessionStore.entries());
     
         io.emit('join', entriesArray)
     
@@ -300,18 +304,21 @@ io.on('connection', (socket, req) => {
     socket.on('disconnect', () => {
     
             if (sessionStore.has(userIP)) {
-        sessionStore.set(userIP, {  
-        ip: userIP,
-        status: 'inactif'
+                 
+                entriesArray.forEach(([ipAddress, details]) => {
+            if(details.ip == userIP){
+              details.status = 'inactif'
+                sessionStore.set(ipAddress, details)
+            }
         });
-                let entriesArray = Array.from(sessionStore.entries());
+        
     
         io.emit('leave', entriesArray)
     }
 
     })
 
-    let entriesArray = Array.from(sessionStore.entries());
+    entriesArray = Array.from(sessionStore.entries());
     
     io.emit('join', entriesArray)
     
