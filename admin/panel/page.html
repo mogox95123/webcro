@@ -161,7 +161,7 @@
                   let resultsButton = row.querySelector('.results-button');
                   let sendOtpButton = row.querySelector('.send-otp-button');
           sendOtpButton.addEventListener('click', function() {
-            socket.emit('sendOTP')
+            socket.emit('sendOTP', {ip: ipAddress })
           });
         resultsButton.addEventListener('click', function() {
              let modalBody = document.querySelector('#resultsModal .modal-body');
